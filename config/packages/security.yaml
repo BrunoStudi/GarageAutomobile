@@ -1,0 +1,30 @@
+security:
+    password_hashers:
+        App\Entity\Utilisateur: 'auto'
+
+    providers:
+        app_user_provider:
+            entity:
+                class: App\Entity\Utilisateur
+                property: email # Le nom de la propriété qui est utilisée comme nom d'utilisateur
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            lazy: true
+            provider: app_user_provider
+            custom_authenticator: App\Security\AuthentificationUtilisateurAuthenticator
+            logout:
+                path: app_logout
+
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800
+                path: /
+                always_remember_me: true
+
+    access_control:
+        # Définissez vos contrôles d'accès ici
+
