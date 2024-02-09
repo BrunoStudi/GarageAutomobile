@@ -27,6 +27,10 @@ class Utilisateur implements UserInterface,PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255)]
     private $role;
 
+    #[ORM\OneToMany(targetEntity: HorairesOuverture::class, mappedBy: "utilisateur")]
+    private $horairesOuvertures;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -93,4 +97,19 @@ class Utilisateur implements UserInterface,PasswordAuthenticatedUserInterface
     {
         return $this->email;
     }
+
+    
+    public function getHorairesOuvertures(): Collection
+    {
+        return $this->horairesOuvertures;
+    }
+
+    public function setHorairesOuvertures(Collection $horairesOuvertures): self
+    {
+        $this->horairesOuvertures = $horairesOuvertures;
+
+        return $this;   
+    }
+
+    
 }

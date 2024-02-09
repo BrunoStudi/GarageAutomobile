@@ -19,6 +19,10 @@ class HorairesOuverture
     #[ORM\Column(type: 'string', length: 255)]
     private $Horaire;
 
+    #[ORM\ManyToOne(targetEntity: Utilisateur::class)]
+    #[ORM\JoinColumn(name: "id", referencedColumnName: "id")]
+    private ?Utilisateur $utilisateur;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -43,6 +47,17 @@ class HorairesOuverture
     public function setHoraire(string $Horaire): self
     {
         $this->Horaire = $Horaire;
+        return $this;
+    }
+
+    public function getUtilisateur(): ?Utilisateur
+    {
+        return $this->utilisateur;
+    }
+
+    public function setUtilisateur(?Utilisateur $utilisateur): self
+    {
+        $this->utilisateur = $utilisateur;
         return $this;
     }
 }

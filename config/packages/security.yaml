@@ -18,6 +18,7 @@ security:
             custom_authenticator: App\Security\AuthentificationUtilisateurAuthenticator
             logout:
                 path: app_logout
+                target: accueil_app
 
             remember_me:
                 secret: '%kernel.secret%'

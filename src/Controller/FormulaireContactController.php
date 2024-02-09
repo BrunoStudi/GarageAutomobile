@@ -3,15 +3,22 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
-use App\Entity\FormulaireContact;
+use Doctrine\Persistence\ManagerRegistry;
 use App\Form\FormulaireContactType;
-
+use App\Entity\FormulaireContact;
 
 class FormulaireContactController extends AbstractController
 {
+    private ManagerRegistry $doctrine;
+
+    public function __construct(ManagerRegistry $doctrine)
+    {
+        $this->doctrine = $doctrine;
+    }
+
     #[Route('/formulaire/contact', name: 'app_formulaire_contact')]
     public function formulaireContact(Request $request): Response
     {
@@ -22,23 +29,16 @@ class FormulaireContactController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // Handle form submission
             // For example, persist the data to the database
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->doctrine->getManager();
             $entityManager->persist($formulaireContact);
             $entityManager->flush();
 
             // Redirect to a success page or render a success message
-            return $this->redirectToRoute('success_page');
+            return $this->redirectToRoute('accueil_app');
         }
 
         return $this->render('formulaire_contact/index.html.twig', [
             'form' => $form->createView(),
         ]);
-    }
-
- 
-    #[Route('/formulaire/contact/success', name: 'success_page')]
-    public function formulaireContactSuccess(): Response
-    {
-        return $this->render('formulaire_contact/success.html.twig');
     }
 }
