@@ -11,7 +11,7 @@ class HorairesOuverture
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $idHoraire = null;
 
     #[ORM\Column(type: 'string', length: 255)]
     private $Jour;
@@ -20,12 +20,13 @@ class HorairesOuverture
     private $Horaire;
 
     #[ORM\ManyToOne(targetEntity: Utilisateur::class)]
-    #[ORM\JoinColumn(name: "id", referencedColumnName: "id")]
+    #[ORM\JoinColumn(name: "utilisateur_id", referencedColumnName: "id")]
     private ?Utilisateur $utilisateur;
 
     public function getId(): ?int
     {
-        return $this->id;
+        return $this->idHoraire;
+
     }
 
     public function getJour(): ?string

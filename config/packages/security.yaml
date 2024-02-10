@@ -6,7 +6,7 @@ security:
         app_user_provider:
             entity:
                 class: App\Entity\Utilisateur
-                property: email # Le nom de la propriété qui est utilisée comme nom d'utilisateur
+                property: email
 
     firewalls:
         dev:
@@ -26,6 +26,9 @@ security:
                 path: /
                 always_remember_me: true
 
-    access_control:
-        # Définissez vos contrôles d'accès ici
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_MANAGER, ROLE_EMPLOYEE] # Example role hierarchy
 
+    access_control:
+        - { path: '^/admin', roles: ROLE_ADMIN } # Example access control rule
+        - { path: '^/employe', roles: ROLE_EMPLOYE }

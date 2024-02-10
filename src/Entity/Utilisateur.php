@@ -25,7 +25,7 @@ class Utilisateur implements UserInterface,PasswordAuthenticatedUserInterface
     private $password;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $role;
+    private $roles;
 
     #[ORM\OneToMany(targetEntity: HorairesOuverture::class, mappedBy: "utilisateur")]
     private $horairesOuvertures;
@@ -60,14 +60,14 @@ class Utilisateur implements UserInterface,PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getRole(): ?string
-    {
-        return $this->role;
-    }
+    // public function getRoles(): ?string
+    // {
+    //     return $this->roles;
+    // }
 
-    public function setRole(string $role): self
+    public function setRoles(string $roles): self
     {
-        $this->role = $role;
+        $this->roles = $roles;
 
         return $this;
     }
@@ -79,7 +79,7 @@ class Utilisateur implements UserInterface,PasswordAuthenticatedUserInterface
 
     public function getRoles(): array
     {
-        return [$this->role];
+        return [$this->roles];
     }
 
     public function eraseCredentials()
