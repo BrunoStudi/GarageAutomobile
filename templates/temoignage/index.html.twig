@@ -1,20 +1,36 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello TemoignageController!{% endblock %}
+{% block title %}Temoignages{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/amens/Desktop/Projet_Bruno/GarageAutomobile/src/Controller/TemoignageController.php'|file_link(0) }}">src/Controller/TemoignageController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/amens/Desktop/Projet_Bruno/GarageAutomobile/templates/temoignage/index.html.twig'|file_link(0) }}">templates/temoignage/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <!-- Début des Témoignages -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Les avis de nos clients</h2>
+            <div class="row g-4">
+                {% for temoignage in temoignages %}
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="{{ loop.index * 0.2 }}s">
+                        <div class="d-flex py-5 px-4">
+                            <i class="fa fa-quote-left fa-3x text-primary flex-shrink-0"></i>
+                            <div class="ps-4">
+                                <h5 class="mb-3">{{ temoignage.Nom }}</h5>
+                                <p>{{ temoignage.Commentaire }}</p>
+                                <p>Note :
+                                    {% set filledStars = temoignage.Note %}
+                                    {% set emptyStars = 5 - filledStars %}
+                                    {% for i in 1..filledStars %}
+                                        <i class="fa fa-star text-warning"></i>
+                                    {% endfor %}
+                                    {% for i in 1..emptyStars %}
+                                        <i class="fa fa-star text-secondary"></i>
+                                    {% endfor %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- Fin des Témoignages -->
 {% endblock %}

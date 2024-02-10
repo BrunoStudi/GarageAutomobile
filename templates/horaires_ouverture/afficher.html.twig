@@ -1,4 +1,4 @@
-{% extends 'basebackoffice.html.twig' %}
+{% extends is_granted('IS_AUTHENTICATED_FULLY') ? 'basebackoffice.html.twig' : 'base.html.twig' %}
 
 {% block title %}Horaires d'Ouverture{% endblock %}
 
@@ -9,47 +9,41 @@
             <div class="col-md-8">
                 <table class="table">
                     <thead>
-    <tr class="text-center">
-        <th scope="col">Jour</th>
-        <th scope="col">Horaire</th>
-        <th scope="col">Supprimer</th>
-        <th scope="col">Modifier</th>
-    </tr>
-</thead>
-
-                   <tbody>
-    {% for horaire in horairesOuvertures %}
-        <tr>
-             <td class="text-center">{{ horaire.getJour() }}</td>
-    <td class="text-center">{{ horaire.getHoraire() }}</td>
-
-<td>
-    <a href="{{ path('supprimer_horaires_ouverture', {'id': horaire.getId()}) }}" class="btn btn-danger btn-sm" style="margin-left: 100px;">
-        <i class="fas fa-trash-alt"></i>
-    </a>
-</td>
-
-<td>
-    <a href="{{ path('modifier_horaires_ouverture', {'id': horaire.getId()}) }}" class="btn btn-primary btn-sm" style="margin-left: 140px;">
-        <i class="fas fa-edit"></i>
-    </a>
-</td>
-
-
-
-
-        </tr>
-    {% endfor %}
-</tbody>
-
-
-
+                        <tr class="text-center">
+                            <th scope="col">Jour</th>
+                            <th scope="col">Horaire</th>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <th scope="col">Supprimer</th>
+                                <th scope="col">Modifier</th>
+                            {% endif %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for horaire in horairesOuvertures %}
+                            <tr>
+                                <td class="text-center">{{ horaire.getJour() }}</td>
+                                <td class="text-center">{{ horaire.getHoraire() }}</td>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <td>
+                                        <a href="{{ path('supprimer_horaires_ouverture', {'id': horaire.getId()}) }}" class="btn btn-danger btn-sm" style="margin-left: 100px;">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ path('modifier_horaires_ouverture', {'id': horaire.getId()}) }}" class="btn btn-primary btn-sm" style="margin-left: 140px;">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
 
-<!-- Début des Services -->
+    <!-- Début des Services -->
 <div class="container-xxl py-5">
     <div class="container">
         <div class="row g-4">

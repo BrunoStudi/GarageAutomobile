@@ -30,6 +30,9 @@ class Utilisateur implements UserInterface,PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: HorairesOuverture::class, mappedBy: "utilisateur")]
     private $horairesOuvertures;
 
+    #[ORM\OneToMany(targetEntity: Service::class, mappedBy: "utilisateur")]
+    private $service;
+
 
     public function getId(): ?int
     {

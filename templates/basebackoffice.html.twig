@@ -59,18 +59,36 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
                 <a href="{{ path('profil_app') }}" class="nav-item nav-link">Profile</a>
+                <a href="#" class="nav-item nav-link">Voitures</a>
 
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Gestion des horaires</a>
-                    <div class="dropdown-menu fade-up m-0">
-                        
-                        <a href="{{ path('ajouter_horaires_ouverture') }}" class="dropdown-item">Ajouter Horaires</a>
-                        <a href="{{ path('horaires_ouverture') }}" class="dropdown-item">Horaires Disponibles</a>
-                    </div>
-                </div>
-                <a href="{{ path('horaires_ouverture') }}" class="nav-item nav-link">Gestion des horaires</a>
-                <a href="about.html" class="nav-item nav-link">Gestion des services</a>
-                <a href="contact.html" class="nav-item nav-link">Gestion des voitures</a>
+{% if is_granted('ROLE_ADMIN') %}
+    <div class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Horaires</a>
+        <div class="dropdown-menu fade-up m-0">
+            <a href="{{ path('ajouter_horaires_ouverture') }}" class="dropdown-item">Ajouter Horaires</a>
+            <a href="{{ path('horaires_ouverture') }}" class="dropdown-item">Horaires Disponibles</a>
+        </div>
+    </div>
+
+      <div class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Services</a>
+        <div class="dropdown-menu fade-up m-0">
+            <a href="{{ path('app_service_new') }}" class="dropdown-item">Ajouter Service</a>
+            <a href="{{ path('app_service_index') }}" class="dropdown-item">Service Disponibles</a>
+        </div>
+    </div>
+{% else %}
+    <a href="{{ path('horaires_ouverture') }}" class="nav-item nav-link">Horaires </a>
+    <a href="{{ path('app_service_index') }}" class="nav-item nav-link">Services </a>
+    <a href="{{ path('app_temoignage_index') }}" class="nav-item nav-link">Témoignage  </a>
+
+{% endif %}
+
+
+
+
+                
+                
 
                 
                 
