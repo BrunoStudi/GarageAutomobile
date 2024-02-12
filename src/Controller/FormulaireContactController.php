@@ -19,6 +19,8 @@ class FormulaireContactController extends AbstractController
         $this->doctrine = $doctrine;
     }
 
+
+
     #[Route('/formulaire/contact', name: 'app_formulaire_contact')]
     public function formulaireContact(Request $request): Response
     {
@@ -27,13 +29,12 @@ class FormulaireContactController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            // Handle form submission
-            // For example, persist the data to the database
+
+
             $entityManager = $this->doctrine->getManager();
             $entityManager->persist($formulaireContact);
             $entityManager->flush();
 
-            // Redirect to a success page or render a success message
             return $this->redirectToRoute('accueil_app');
         }
 

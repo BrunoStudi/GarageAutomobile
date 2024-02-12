@@ -14,22 +14,20 @@ class HorairesOuvertureType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('Jour', ChoiceType::class, [
-            'label' => 'Jour',
-            'choices' => [
-                'Lundi' => 'Lundi',
-                'Mardi' => 'Mardi',
-                'Mercredi' => 'Mercredi',
-                'Jeudi' => 'Jeudi',
-                'Vendredi' => 'Vendredi',
-                'Samedi' => 'Samedi',
-                'Dimanche' => 'Dimanche',
-            ],
-            'attr' => ['class' => 'form-control'],
-        ])
-            ->add('Horaire')
-           
-        ;
+            ->add('Jour', ChoiceType::class, [
+                'label' => 'Jour',
+                'choices' => [
+                    'Lundi' => 'Lundi',
+                    'Mardi' => 'Mardi',
+                    'Mercredi' => 'Mercredi',
+                    'Jeudi' => 'Jeudi',
+                    'Vendredi' => 'Vendredi',
+                    'Samedi' => 'Samedi',
+                    'Dimanche' => 'Dimanche',
+                ],
+                'attr' => ['class' => 'form-control'],
+            ])
+            ->add('Horaire');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

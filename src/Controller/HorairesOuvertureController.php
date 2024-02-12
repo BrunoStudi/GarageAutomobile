@@ -9,110 +9,88 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\HorairesOuverture;
 use App\Form\HorairesOuvertureType;
+use App\Repository\HorairesOuvertureRepository;
+
 
 
 
 class HorairesOuvertureController extends AbstractController
 {
-    private $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
-    }
+    //////////////////////////////////////// Ajouter Horaires d'Ouverture //////////////////////////////////////////
 
 
-     //////////////////////////////////////// Ajouter Horaires d'Ouverture //////////////////////////////////////////
-
-     
     #[Route('admin/horaires-ouverture/ajouter', name: 'ajouter_horaires_ouverture')]
-    public function create(Request $request): Response
+    public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
-            $user = $this->getUser();
-            $horairesOuverture = new HorairesOuverture();
-            $form = $this->createForm(HorairesOuvertureType::class, $horairesOuverture);
+        $user = $this->getUser();
+        $horairesOuverture = new HorairesOuverture();
+        $form = $this->createForm(HorairesOuvertureType::class, $horairesOuverture);
 
-            $form->handleRequest($request);
-            if ($form->isSubmitted() && $form->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
 
-                $horairesOuverture->setUtilisateur($user);
-                $this->entityManager->persist($horairesOuverture);
-                $this->entityManager->flush();
+            $horairesOuverture->setUtilisateur($user);
+            $entityManager->persist($horairesOuverture);
+            $entityManager->flush();
 
-                // Redirect to a success page or render a success message
-                return $this->redirectToRoute('horaires_ouverture');
-            }
 
-            return $this->render('horaires_ouverture/ajouter.html.twig', [
-                'form' => $form->createView(),
-            ]);
-       
+            return $this->redirectToRoute('horaires_ouverture');
+        }
+
+        return $this->render('horaires_ouverture/ajouter.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
 
-       //////////////////////////////////////// Afficher Horaires d'Ouverture //////////////////////////////////////////
+    //////////////////////////////////////// Afficher Horaires d'Ouverture //////////////////////////////////////////
 
 
     #[Route('/horaires-ouverture', name: 'horaires_ouverture')]
-    public function index(): Response
-{
-    
+    public function index(HorairesOuvertureRepository $horairesOuvertureRepository): Response
+    {
 
-    $horairesOuvertures = $this->entityManager->getRepository(HorairesOuverture::class)->findAll();
-
-    return $this->render('horaires_ouverture/afficher.html.twig', [
-        'horairesOuvertures' => $horairesOuvertures,
-    ]);
-
-}
+        return $this->render('horaires_ouverture/afficher.html.twig', [
+            'horairesOuvertures' => $horairesOuvertureRepository->findAll(),
+        ]);
+    }
 
 
-   //////////////////////////////////////// Modifier Horaires d'Ouverture //////////////////////////////////////////
+    //////////////////////////////////////// Modifier Horaires d'Ouverture //////////////////////////////////////////
 
 
-   #[Route('admin/horaires-ouverture/{id}', name: 'modifier_horaires_ouverture')]
-   public function update(Request $request, HorairesOuverture $horairesOuverture): Response
-   {
+    #[Route('admin/horaires-ouverture/{id}', name: 'modifier_horaires_ouverture')]
+    public function update(Request $request, HorairesOuverture $horairesOuverture, EntityManagerInterface $entityManager): Response
+    {
 
-    
-       $form = $this->createForm(HorairesOuvertureType::class, $horairesOuverture);
-       $form->handleRequest($request);
 
-       if ($form->isSubmitted() && $form->isValid()) {
-           $this->entityManager->flush();
+        $form = $this->createForm(HorairesOuvertureType::class, $horairesOuverture);
+        $form->handleRequest($request);
 
-           // Redirect to a success page or render a success message
-           return $this->redirectToRoute('horaires_ouverture');
-       }
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
 
-       return $this->render('horaires_ouverture/modifier.html.twig', [
-           'form' => $form->createView(),
-       ]);
-   }
+            return $this->redirectToRoute('horaires_ouverture');
+        }
+
+        return $this->render('horaires_ouverture/modifier.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
 
 
     //////////////////////////////////////// Supprimer Horaires d'Ouverture //////////////////////////////////////////
 
     #[Route('admin/horaires-ouverture/{id}/supprimer', name: 'supprimer_horaires_ouverture')]
 
-    public function delete(Request $request, HorairesOuverture $horairesOuverture): Response
+    public function delete(Request $request, HorairesOuverture $horairesOuverture, EntityManagerInterface $entityManager): Response
     {
-        
+
+        $entityManager->remove($horairesOuverture);
+        $entityManager->flush();
 
 
-            $this->entityManager->remove($horairesOuverture);
-            $this->entityManager->flush();
-    
-            // Redirect or return a response indicating success
-            return $this->redirectToRoute('horaires_ouverture');
-        
-        
-    
-       
+        return $this->redirectToRoute('horaires_ouverture');
     }
-
-
-
-
 }
-

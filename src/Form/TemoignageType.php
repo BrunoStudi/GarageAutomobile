@@ -14,8 +14,7 @@ class TemoignageType extends AbstractType
         $builder
             ->add('Nom')
             ->add('Commentaire')
-            ->add('Note')
-        ;
+            ->add('Note');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

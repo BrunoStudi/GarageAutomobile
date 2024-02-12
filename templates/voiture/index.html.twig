@@ -1,43 +1,39 @@
-{% extends 'base.html.twig' %}
+{% extends 'basebackoffice.html.twig' %}
 
 {% block title %}Voiture index{% endblock %}
 
 {% block body %}
-    <h1>Voiture index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>IdVoiture</th>
-                <th>Prix</th>
-                <th>ImageUrl</th>
-                <th>AnneeCirculation</th>
-                <th>Kilometrage</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for voiture in voitures %}
-            <tr>
-                <td>{{ voiture.id }}</td>
-                <td>{{ voiture.IdVoiture }}</td>
-                <td>{{ voiture.Prix }}</td>
-                <td>{{ voiture.ImageUrl }}</td>
-                <td>{{ voiture.AnneeCirculation ? voiture.AnneeCirculation|date('Y-m-d') : '' }}</td>
-                <td>{{ voiture.Kilometrage }}</td>
-                <td>
-                    <a href="{{ path('app_voiture_show', {'id': voiture.id}) }}">show</a>
-                    <a href="{{ path('app_voiture_edit', {'id': voiture.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+<!-- Voitures Start -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h1 class="mb-5">Voitures</h1>
+        </div>
+        <div class="row g-4">
+            {% for voiture in voitures %}
+            <div class="col-lg-4 col-md-6 col-sm-12 wow fadeInUp" data-wow-delay="0.{{ loop.index }}">
+                <div class="team-item">
+                    <div class="position-relative overflow-hidden">
+                        <img class="img-fluid mx-auto d-block" src="{{ asset('uploads/voiture/' ~ voiture.imageName) }}" alt="" style="max-height: 400px; width: auto;">
+                        <div class="team-overlay position-absolute start-0 top-0 w-100 h-100">
+                            <a href="#" class="btn btn-primary">View More</a>
+                        </div>
+                    </div>
+                    <div class="bg-light text-center p-4">
+                        <h5 class="fw-bold mb-3">{{ voiture.Titre }}</h5>
+                        <p class="mb-2">Prix: {{ voiture.Prix | number_format(0, '', '.') }} €</p>
+                        <p class="mb-2">Année de circulation: {{ voiture.AnneeCirculation }}</p>
+                        <p class="mb-2">Kilométrage: {{ voiture.Kilometrage | number_format(0, '', '.') }} KM</p>
+                        <!-- Add any other details you want to display here -->
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Voitures End -->
 
-    <a href="{{ path('app_voiture_new') }}">Create new</a>
+
 {% endblock %}

@@ -1,11 +1,49 @@
-{% extends 'base.html.twig' %}
+{% extends 'basebackoffice.html.twig' %}
 
-{% block title %}New Voiture{% endblock %}
+{% block title %}Add Voiture{% endblock %}
 
 {% block body %}
-    <h1>Create new Voiture</h1>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="py-5">
+                    <h1 class="text-center mb-4">Ajouter Voiture</h1>
+                    <form method="post" enctype="multipart/form-data">
+                        {{ form_start(form) }}
+                        {{ form_errors(form) }}
 
-    {{ include('voiture/_form.html.twig') }}
+                        <div class="mb-3">
+                            {{ form_label(form.Titre, 'Titre') }}
+                            {{ form_widget(form.Titre, {'attr': {'class': 'form-control'}}) }}
+                        </div>
 
-    <a href="{{ path('app_voiture_index') }}">back to list</a>
+                        <div class="mb-3">
+                            {{ form_label(form.Prix, 'Prix') }}
+                            {{ form_widget(form.Prix, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form_label(form.AnneeCirculation, 'Année de circulation') }}
+                            {{ form_widget(form.AnneeCirculation, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form_label(form.Kilometrage, 'Kilométrage') }}
+                            {{ form_widget(form.Kilometrage, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form_label(form.imageFile, 'Images') }}
+                            {{ form_widget(form.imageFile, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+
+                        <input type="hidden" name="form[_token]" value="{{ csrf_token('add_voiture') }}">
+
+                        <button type="submit" class="btn btn-primary">Add Voiture</button>
+                        {{ form_end(form) }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

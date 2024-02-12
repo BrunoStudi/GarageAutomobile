@@ -33,6 +33,9 @@ class Utilisateur implements UserInterface,PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Service::class, mappedBy: "utilisateur")]
     private $service;
 
+    #[ORM\OneToMany(targetEntity: Voiture::class, mappedBy: "utilisateur")]
+    private $voiture;
+
 
     public function getId(): ?int
     {
@@ -102,17 +105,40 @@ class Utilisateur implements UserInterface,PasswordAuthenticatedUserInterface
     }
 
     
-    public function getHorairesOuvertures(): Collection
+    public function getService(): ?Service
+    {
+        return $this->service;
+    }
+
+    public function setService(Service $service): self
+    {
+        $this->service = $service;
+
+        return $this;   
+    }
+
+    
+    public function getHorairesOuvertures(): ?HorairesOuverture
     {
         return $this->horairesOuvertures;
     }
 
-    public function setHorairesOuvertures(Collection $horairesOuvertures): self
+    public function setHorairesOuvertures(HorairesOuverture $horairesOuvertures): self
     {
         $this->horairesOuvertures = $horairesOuvertures;
 
         return $this;   
     }
 
-    
+    public function getVoiture(): ?Voiture
+    {
+        return $this->voiture;
+    }
+
+    public function setVoiture(Voiture $voiture): self
+    {
+        $this->voiture = $voiture;
+
+        return $this;   
+    }
 }

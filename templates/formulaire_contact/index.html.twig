@@ -1,50 +1,53 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Contact Form{% endblock %}
+{% block title %}Contact Form
+{% endblock %}
 
 {% block body %}
-    
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-6">
-            <div class="py-5">
-                <h1 class="text-center mb-4">Contactez-nous</h1>
-                <form method="post" action="{{ path('app_formulaire_contact') }}">
-                    <!-- Display form errors -->
-                    {{ form_errors(form) }}
 
-                    <div class="row g-3">
-                        <div class="col-12">
-                            {{ form_label(form.nom, 'Nom') }}
-                            {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
-                        </div>
-                        <div class="col-12">
-                            {{ form_label(form.prenom, 'Prénom') }}
-                            {{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
-                        </div>
-                        <div class="col-12">
-                            {{ form_label(form.email, 'Email') }}
-                            {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
-                        </div>
-                        <div class="col-12">
-                            {{ form_label(form.numTel, 'Numéro de téléphone') }}
-                            {{ form_widget(form.numTel, {'attr': {'class': 'form-control'}}) }}
-                        </div>
-                        <div class="col-12">
-                            {{ form_label(form.message, 'Message') }}
-                            {{ form_widget(form.message, {'attr': {'class': 'form-control'}}) }}
-                        </div>
-                        <div class="col-12">
-                            <!-- CSRF token -->
-                            {{ form_widget(form._token) }}
-                            <button class="btn btn-primary w-100 py-3" type="submit">Envoyer</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+	<div class="container mt-5">
+		<div class="row justify-content-center">
+			<div class="col-lg-6">
+				<div class="py-5">
+					<h1 class="text-center mb-4">Contactez-nous</h1>
+					<form
+						method="post" action="{{ path('app_formulaire_contact') }}">
+						<!-- Display form errors -->
+						{{ form_errors(form) }}
+
+						<div class="row g-3">
+							<div class="col-12">
+								{{ form_label(form.nom, 'Nom') }}
+								{{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+							</div>
+							<div class="col-12">
+								{{ form_label(form.prenom, 'Prénom') }}
+								{{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
+							</div>
+							<div class="col-12">
+								{{ form_label(form.email, 'Email') }}
+								{{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+							</div>
+							<div class="col-12">
+								{{ form_label(form.numTel, 'Numéro de téléphone') }}
+								{{ form_widget(form.numTel, {'attr': {'class': 'form-control'}}) }}
+							</div>
+							<div class="col-12">
+								{{ form_label(form.message, 'Message') }}
+								{{ form_widget(form.message, {'attr': {'class': 'form-control'}}) }}
+							</div>
+							<div
+								class="col-12">
+								<!-- CSRF token -->
+								{{ form_widget(form._token) }}
+								<button class="btn btn-primary w-100 py-3" type="submit">Envoyer</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 {% endblock %}

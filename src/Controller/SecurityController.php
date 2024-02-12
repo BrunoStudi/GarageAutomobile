@@ -17,6 +17,10 @@ class SecurityController extends AbstractController
     #[Route('/accueil', name: 'accueil_app')]
     public function index(TemoignageRepository $temoignageRepository): Response
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('profil_app');
+        }
+
         $temoignages = $temoignageRepository->findAll();
 
         return $this->render('accueil.html.twig', [
@@ -24,20 +28,21 @@ class SecurityController extends AbstractController
         ]);
     }
 
+
+
     #[Route('/profil', name: 'profil_app')]
     public function profil(): Response
     {
-        return $this->render('profil.html.twig', [
-            
-        ]);
+        return $this->render('profil.html.twig', []);
     }
+
 
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-       /* if ($this->getUser()) {
-             return $this->redirectToRoute('profil.app');
-         }*/
+        if ($this->getUser()) {
+            return $this->redirectToRoute('profil_app');
+        }
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -47,10 +52,11 @@ class SecurityController extends AbstractController
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
+
+
     #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): void
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
-        
     }
 }

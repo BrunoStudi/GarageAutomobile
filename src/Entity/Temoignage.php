@@ -22,6 +22,9 @@ class Temoignage
     #[ORM\Column(type: 'integer')]
     private $Note;
 
+    #[ORM\Column(type: 'integer')]
+    private $Etat;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -57,6 +60,17 @@ class Temoignage
     public function setNote(int $Note): self
     {
         $this->Note = $Note;
+        return $this;
+    }
+
+    public function getEtat(): ?int
+    {
+        return $this->Etat;
+    }
+
+    public function setEtat(int $Etat): self
+    {
+        $this->Etat = $Etat;
         return $this;
     }
 }

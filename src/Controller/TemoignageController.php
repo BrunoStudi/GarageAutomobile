@@ -11,10 +11,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/temoignage')]
+
 class TemoignageController extends AbstractController
 {
-    #[Route('/', name: 'app_temoignage_index', methods: ['GET'])]
+
+    #[Route('employe/temoignage', name: 'app_temoignage_index', methods: ['GET'])]
     public function index(TemoignageRepository $temoignageRepository): Response
     {
         return $this->render('temoignage/index.html.twig', [
@@ -22,7 +23,9 @@ class TemoignageController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_temoignage_new', methods: ['GET', 'POST'])]
+
+
+    #[Route('temoignage/new', name: 'app_temoignage_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $temoignage = new Temoignage();
@@ -32,13 +35,16 @@ class TemoignageController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $note = $request->request->get('note');
 
-           if (empty($note)) {
-        // Default the note to 0
-        $note = 0;
-    }
+            if (empty($note)) {
+                $note = 0;
+            }
 
-    // Set the star rating value as the 'note' property of the entity
-    $temoignage->setNote((int)$note);
+            $temoignage->setNote((int)$note);
+
+            if ($temoignage->getEtat() === null) {
+                $temoignage->setEtat(0);
+            }
+
             $entityManager->persist($temoignage);
             $entityManager->flush();
 
@@ -51,15 +57,11 @@ class TemoignageController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_temoignage_show', methods: ['GET'])]
-    public function show(Temoignage $temoignage): Response
-    {
-        return $this->render('temoignage/show.html.twig', [
-            'temoignage' => $temoignage,
-        ]);
-    }
 
-    #[Route('/{id}/edit', name: 'app_temoignage_edit', methods: ['GET', 'POST'])]
+
+
+
+    #[Route('employe/temoignage/{id}/edit', name: 'app_temoignage_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Temoignage $temoignage, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(TemoignageType::class, $temoignage);
@@ -77,14 +79,30 @@ class TemoignageController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_temoignage_delete', methods: ['POST'])]
+
+
+
+    #[Route('employe/temoignage/{id}', name: 'app_temoignage_delete', methods: ['GET', 'POST'])]
     public function delete(Request $request, Temoignage $temoignage, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$temoignage->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($temoignage);
-            $entityManager->flush();
-        }
+
+        $entityManager->remove($temoignage);
+        $entityManager->flush();
+
 
         return $this->redirectToRoute('app_temoignage_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+
+
+
+    #[Route('employe/temoignage/temoignage/{id}/accept', name: 'app_temoignage_accept', methods: ['GET'])]
+    public function accept(Temoignage $temoignage, EntityManagerInterface $entityManager): Response
+    {
+        $temoignage->setEtat(1);
+        $entityManager->flush();
+
+
+        return $this->redirectToRoute('app_temoignage_index');
     }
 }
