@@ -1,39 +1,71 @@
-{% extends 'basebackoffice.html.twig' %}
+{% extends is_granted('IS_AUTHENTICATED_FULLY') ? 'basebackoffice.html.twig' : 'base.html.twig' %}
 
-{% block title %}Voiture index{% endblock %}
+{% block title %}Voiture index
+{% endblock %}
 
 {% block body %}
 
-<!-- Voitures Start -->
-<div class="container-xxl py-5">
-    <div class="container">
-        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-            <h1 class="mb-5">Voitures</h1>
-        </div>
-        <div class="row g-4">
-            {% for voiture in voitures %}
-            <div class="col-lg-4 col-md-6 col-sm-12 wow fadeInUp" data-wow-delay="0.{{ loop.index }}">
-                <div class="team-item">
-                    <div class="position-relative overflow-hidden">
-                        <img class="img-fluid mx-auto d-block" src="{{ asset('uploads/voiture/' ~ voiture.imageName) }}" alt="" style="max-height: 400px; width: auto;">
-                        <div class="team-overlay position-absolute start-0 top-0 w-100 h-100">
-                            <a href="#" class="btn btn-primary">View More</a>
-                        </div>
-                    </div>
-                    <div class="bg-light text-center p-4">
-                        <h5 class="fw-bold mb-3">{{ voiture.Titre }}</h5>
-                        <p class="mb-2">Prix: {{ voiture.Prix | number_format(0, '', '.') }} €</p>
-                        <p class="mb-2">Année de circulation: {{ voiture.AnneeCirculation }}</p>
-                        <p class="mb-2">Kilométrage: {{ voiture.Kilometrage | number_format(0, '', '.') }} KM</p>
-                        <!-- Add any other details you want to display here -->
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</div>
-<!-- Voitures End -->
+	<!-- Voitures Start -->
+	<div class="container-xxl py-5">
+		<div class="container">
+			<div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+				<h1 class="mb-5">Voitures</h1>
+			</div>
+			<div class="row g-4">
+				{% for voiture in voitures %}
+					<div class="col-lg-4 col-md-6 col-sm-12 wow fadeInUp" data-wow-delay="0.{{ loop.index }}">
+						<div class="team-item">
+							<div class="position-relative overflow-hidden">
+								<div class="img-container">
+									<img src="{{ asset('uploads/voiture/' ~ voiture.images[0].name ) }}" alt="{{ voiture.Titre }}" class="img-thumbnail">
+								</div>
 
+								<div class="team-overlay position-absolute start-0 top-0 w-100 h-100">
+									<a href="{{ path('voiture_details', {'id': voiture.id}) }}" class="btn btn-primary">Plus de détails</a>
+								</div>
+							</div>
+							<div class="bg-light text-center p-4">
+								<h5 class="fw-bold mb-3">{{ voiture.Titre }}</h5>
+								<p class="mb-2">Prix:
+									{{ voiture.Prix | number_format(0, '', '.') }}
+									€</p>
+								<p class="mb-2">Année de circulation:
+									{{ voiture.AnneeCirculation }}</p>
+								<p class="mb-2">Kilométrage:
+									{{ voiture.Kilometrage | number_format(0, '', '.') }}
+									KM</p>
+								<!-- Add any other details you want to display here -->
+
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+	<!-- Voitures End -->
+
+	<!-- Custom CSS for image container -->
+	<style>
+		.img-container {
+			width: 100%;
+			height: 200px; /* Adjust the height as needed */
+			overflow: hidden;
+		}
+
+		.img-container img {
+			width: 100%;
+			height: auto;
+			object-fit: cover;
+		}
+
+		.button-group {
+			margin-top: 10px; /* Adjust the spacing between the buttons */
+		}
+
+		.button-group .btn {
+			margin-right: 10px; /* Adjust the spacing between the buttons */
+		}
+	</style>
 
 {% endblock %}

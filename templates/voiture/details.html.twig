@@ -1,0 +1,130 @@
+{% extends is_granted('IS_AUTHENTICATED_FULLY') ? 'basebackoffice.html.twig' : 'base.html.twig' %}
+
+{% block title %}Détails de la voiture
+{% endblock %}
+
+{% block body %}
+	<div class="container py-5">
+		<div class="row">
+			<div class="col-lg-6">
+				<h1 class="display-3">{{ voiture.Titre }}</h1>
+
+				<ul class="list-unstyled">
+					<li class="mb-3 d-flex align-items-center">
+						<div class="me-3">
+							<i class="fas fa-money-bill fa-lg text-danger"></i>
+						</div>
+						<div>
+							<span class="lead me-2">Prix :</span>
+							<span class="lead">{{ voiture.Prix | number_format(0, '', '.') }}
+								€</span>
+						</div>
+					</li>
+					<li class="mb-3 d-flex align-items-center">
+						<div class="me-3">
+							<i class="fas fa-calendar-alt fa-lg text-danger"></i>
+						</div>
+						<div>
+							<span class="lead me-2">Année circulation :</span>
+							<span class="lead">{{ voiture.AnneeCirculation }}</span>
+						</div>
+					</li>
+					<li class="d-flex align-items-center">
+						<div class="me-3">
+							<i class="fas fa-road fa-lg text-danger"></i>
+						</div>
+						<div>
+							<span class="lead me-2">Kilométrage :</span>
+							<span class="lead">{{ voiture.Kilometrage | number_format(0, '', '.') }}
+								KM</span>
+						</div>
+					</li>
+				</ul>
+
+
+				<!-- Boutons d'édition et de suppression pour les employés -->
+				{% if is_granted('ROLE_EMPLOYE') %}
+					<div class="mt-4">
+						<a href="#" class="btn btn-primary me-3">
+							<i class="fas fa-edit"></i>
+						</a>
+						<a href="#" class="btn btn-danger">
+							<i class="fas fa-trash"></i>
+						</a>
+					</div>
+
+				{% endif %}
+
+
+				<div class="mt-4">
+					<h4>
+						Des questions sur cette voiture ?</h4>
+					<h4>
+						Laissez-nous un message
+					</h4>
+
+				</div>
+
+
+				<!-- Formulaire de contact -->
+				<div class="py-5">
+					<form
+						method="post" action="{{ path('app_formulaire_contact') }}">
+						<!-- Affichage des erreurs de formulaire -->
+						{{ form_errors(form) }}
+
+						<div class="row g-3">
+							<div class="col-sm-6">
+								{{ form_label(form.nom, 'Nom') }}
+								{{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+							</div>
+							<div class="col-sm-6">
+								{{ form_label(form.prenom, 'Prénom') }}
+								{{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
+							</div>
+							<div class="col-12">
+								{{ form_label(form.email, 'Email') }}
+								{{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+							</div>
+							<div class="col-12">
+								{{ form_label(form.numTel, 'Numéro de téléphone') }}
+								{{ form_widget(form.numTel, {'attr': {'class': 'form-control'}}) }}
+							</div>
+							<div class="col-12">
+								{{ form_label(form.message, 'Message') }}
+								{{ form_widget(form.message, {'attr': {'class': 'form-control'}}) }}
+							</div>
+							<div
+								class="col-12">
+								<!-- Jeton CSRF -->
+								{{ form_widget(form._token) }}
+								<button class="btn btn-primary btn-lg w-100 py-3" type="submit">Envoyer</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<!-- Fin du formulaire de contact -->
+			</div>
+
+			<div class="col-lg-6" style="margin-top: 175px; ">
+				<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+					<div class="carousel-inner">
+						{% for image in voiture.images %}
+							<div class="carousel-item {% if loop.first %}active{% endif %}">
+								<img src="{{ asset('uploads/voiture/' ~ image.name) }}" class="d-block w-100" alt="{{ voiture.Titre }}">
+							</div>
+						{% endfor %}
+					</div>
+					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Précédent</span>
+					</button>
+					<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Suivant</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

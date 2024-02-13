@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\All;
 
 
 
@@ -23,21 +24,21 @@ class VoitureType extends AbstractType
             ->add('Prix', IntegerType::class)
             ->add('AnneeCirculation', IntegerType::class)
             ->add('Kilometrage', IntegerType::class)
-            ->add('imageFile', FileType::class, [
-                'label' => 'Voiture Image',
-                // Add constraints to validate the uploaded file
+            ->add('image', FileType::class, [
+                'label' => false,
+                'multiple' => true,
+                'mapped' => false,
+                'required' => false,
                 'constraints' => [
-                    new File([
-                        'maxSize' => '1024k',
-                        'mimeTypes' => [
-                            'image/jpeg',
-                            'image/png',
-                            // Add more mime types if needed
-                        ],
-                        'mimeTypesMessage' => 'Please upload a valid JPEG or PNG image',
-                    ])
-                ],
-            ]);
+                    new All(
+                        new Image([
+                            'maxWidth' => 1280,
+                            'maxWidthMessage' => 'L\'image doit faire {{ max_width }} pixels de large au maximum'
+                        ])
+                    )
+                ]
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

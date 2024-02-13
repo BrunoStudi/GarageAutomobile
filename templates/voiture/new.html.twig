@@ -1,46 +1,45 @@
-{% extends 'basebackoffice.html.twig' %}
+{% extends is_granted('IS_AUTHENTICATED_FULLY') ? 'basebackoffice.html.twig' : 'base.html.twig' %}
 
-{% block title %}Add Voiture{% endblock %}
+{% block title %}Ajouter une voiture{% endblock %}
 
 {% block body %}
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-lg-6">
                 <div class="py-5">
-                    <h1 class="text-center mb-4">Ajouter Voiture</h1>
-                    <form method="post" enctype="multipart/form-data">
-                        {{ form_start(form) }}
+                    <h1 class="text-center mb-4">Ajouter une voiture</h1>
+                    <form method="post" action="{{ path('app_voiture_new') }}" enctype="multipart/form-data">
+
+                        <!-- Display form errors -->
                         {{ form_errors(form) }}
 
-                        <div class="mb-3">
-                            {{ form_label(form.Titre, 'Titre') }}
-                            {{ form_widget(form.Titre, {'attr': {'class': 'form-control'}}) }}
+                        <div class="row g-3">
+                            <div class="col-12">
+                                {{ form_label(form.Titre, 'Titre') }}
+                                {{ form_widget(form.Titre, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            <div class="col-12">
+                                {{ form_label(form.Prix, 'Prix') }}
+                                {{ form_widget(form.Prix, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            <div class="col-12">
+                                {{ form_label(form.AnneeCirculation, 'Année de circulation') }}
+                                {{ form_widget(form.AnneeCirculation, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            <div class="col-12">
+                                {{ form_label(form.Kilometrage, 'Kilométrage') }}
+                                {{ form_widget(form.Kilometrage, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            <div class="col-12">
+                                {{ form_label(form.image, 'Image') }}
+                                {{ form_widget(form.image, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            <div class="col-12">
+                                <!-- CSRF token -->
+                                {{ form_widget(form._token) }}
+                                <button class="btn btn-primary w-100 py-3" type="submit">Ajouter</button>
+                            </div>
                         </div>
-
-                        <div class="mb-3">
-                            {{ form_label(form.Prix, 'Prix') }}
-                            {{ form_widget(form.Prix, {'attr': {'class': 'form-control'}}) }}
-                        </div>
-
-                        <div class="mb-3">
-                            {{ form_label(form.AnneeCirculation, 'Année de circulation') }}
-                            {{ form_widget(form.AnneeCirculation, {'attr': {'class': 'form-control'}}) }}
-                        </div>
-
-                        <div class="mb-3">
-                            {{ form_label(form.Kilometrage, 'Kilométrage') }}
-                            {{ form_widget(form.Kilometrage, {'attr': {'class': 'form-control'}}) }}
-                        </div>
-
-                        <div class="mb-3">
-                            {{ form_label(form.imageFile, 'Images') }}
-                            {{ form_widget(form.imageFile, {'attr': {'class': 'form-control'}}) }}
-                        </div>
-
-                        <input type="hidden" name="form[_token]" value="{{ csrf_token('add_voiture') }}">
-
-                        <button type="submit" class="btn btn-primary">Add Voiture</button>
-                        {{ form_end(form) }}
                     </form>
                 </div>
             </div>

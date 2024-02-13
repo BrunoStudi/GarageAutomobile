@@ -3,16 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\VoitureRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
-
-
-
-
-
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: VoitureRepository::class)]
 #[Vich\Uploadable]
@@ -24,27 +20,16 @@ class Voiture
     private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $Titre;
+    private string $Titre;
 
     #[ORM\Column(type: 'float')]
-    private $Prix;
+    private float $Prix;
 
     #[ORM\Column(type: 'integer')]
-    private $AnneeCirculation;
+    private int $AnneeCirculation;
 
     #[ORM\Column(type: 'float')]
-    private $Kilometrage;
-
-    #[ORM\Column(nullable: true)]
-    private ?string $imageName = null;
-
-    #[Vich\UploadableField(mapping: "voiture_images", fileNameProperty: "imageName")]
-    #[Assert\Image(mimeTypes: ["image/jpeg", "image/png"])]
-    private ?File $imageFile = null;
-
-
-    #[ORM\Column(type: 'datetime')]
-    private ?\DateTimeInterface $updatedAt = null;
+    private float $Kilometrage;
 
 
     #[ORM\ManyToOne(targetEntity: Utilisateur::class)]
@@ -52,9 +37,13 @@ class Voiture
     private ?Utilisateur $utilisateur;
 
 
+    #[ORM\OneToMany(mappedBy: 'voiture', targetEntity: Image::class, orphanRemoval: true, cascade: ['persist'])]
+    private $images;
+
+
     public function __construct()
     {
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -107,44 +96,6 @@ class Voiture
     }
 
 
-    public function getImageFile(): ?UploadedFile
-    {
-        return $this->imageFile;
-    }
-
-    public function setImageFile(?UploadedFile $imageFile): void
-    {
-        $this->imageFile = $imageFile;
-
-        if ($imageFile !== null) {
-            $this->updatedAt = new \DateTimeImmutable();
-        }
-    }
-
-    public function getImageName(): ?string
-    {
-        return $this->imageName;
-    }
-
-    public function setImageName(?string $imageName): void
-    {
-        $this->imageName = $imageName;
-    }
-
-
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
-        return $this;
-    }
-
-
-
     public function getUtilisateur(): ?Utilisateur
     {
         return $this->utilisateur;
@@ -155,4 +106,42 @@ class Voiture
         $this->utilisateur = $utilisateur;
         return $this;
     }
+
+
+
+
+
+    
+  /**
+     * @return Collection|Image[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setProducts($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getProducts() === $this) {
+                $image->setProducts(null);
+            }
+        }
+
+        return $this;
+    }
+
+   
+    
 }
