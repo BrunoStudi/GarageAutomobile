@@ -24,6 +24,7 @@ class FormulaireContactType extends AbstractType
             ->add('email', EmailType::class)
             ->add('numTel', TelType::class)
             ->add('message', TextareaType::class);
+            
     }
 
     public function configureOptions(OptionsResolver $resolver)

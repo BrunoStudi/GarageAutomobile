@@ -7,7 +7,7 @@
 	<div class="container mt-5">
 		<div class="row justify-content-center">
 			<div class="col-md-6">
-				<form class="form-signin" method="post">
+				<form class="card p-4" method="post" style="border-radius: 10px;">
 					{% if error %}
 						<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 					{% endif %}

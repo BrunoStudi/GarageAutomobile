@@ -1,0 +1,32 @@
+{% extends 'basebackoffice.html.twig' %}
+
+{% block title %}Contacts{% endblock %}
+
+{% block body %}
+    <div class="container-xxl py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Les contacts</h2>
+            <div class="row g-4">
+                {% for contact in contacts %}
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="{{ loop.index * 0.2 }}s">
+                        <div class="d-flex py-5 px-4" style="background-color: #f8f9fa; border-radius: 10px;"> <!-- Add inline styles for background color and border-radius -->
+                            <i class="fa fa-envelope fa-3x text-primary flex-shrink-0"></i> <!-- Icône d'enveloppe -->
+                            <div class="ps-4">
+                                <h5 class="mb-3" style="font-size: 1.5rem;">{{ contact.getNom() }} {{ contact.getPrenom() }}</h5> <!-- Augmenter la taille de la police -->
+                                <p style="font-size: 1.2rem;">Email: {{ contact.getEmail() }}</p> <!-- Augmenter la taille de la police -->
+                                <p style="font-size: 1.2rem;">Téléphone: {{ contact.getNumTel() }}</p> <!-- Augmenter la taille de la police -->
+                                <p style="font-size: 1.2rem;">Message : {{ contact.getMessage() }}</p> <!-- Augmenter la taille de la police -->
+                                <!-- Ajoutez d'autres détails de contact si nécessaire -->
+                                <div class="text-center mt-3">
+                                    <a href="{{ path('delete_formulaire_contact', {'id': contact.id}) }}" class="btn btn-danger">
+                                        <i class="fa fa-trash"></i> <!-- Icône de la corbeille -->
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,29 +1,26 @@
-{% extends 'base.html.twig' %}
+{% extends 'basebackoffice.html.twig' %}
 
 {% block title %}Register{% endblock %}
 
 {% block body %}
-<div class="container mt-5"> <!-- Added container and margin top -->
+<div class="container mt-5 bg-white shadow-lg p-5"> <!-- Added bg-white for white background, shadow-lg for shadow, and padding -->
     <div class="row justify-content-center"> <!-- Center the form horizontally -->
-        <div class="col-md-6"> <!-- Limit form width -->
+        <div class="col-md-8"> <!-- Adjusted width of the column -->
             <h1 class="text-center">Register</h1>
 
             <form method="post">
                 {{ form_errors(registrationForm) }}
 
                 {{ form_start(registrationForm) }}
-                <div class="mb-3">
-                    {{ form_row(registrationForm.email, {'attr': {'class': 'form-control', 'placeholder': 'Email'}}) }}
+                <div class="mb-4"> <!-- Increased margin bottom for more vertical space -->
+                    {{ form_row(registrationForm.email, {'attr': {'class': 'form-control', 'style': 'border-radius: 10px;'}}) }} <!-- Added border radius -->
                 </div>
-                <div class="mb-3">
-                    {{ form_row(registrationForm.plainPassword, {'attr': {'class': 'form-control', 'placeholder': 'Password'}}) }}
+                <div class="mb-4"> <!-- Increased margin bottom for more vertical space -->
+                    {{ form_row(registrationForm.plainPassword, {'label': 'Password', 'attr': {'class': 'form-control', 'style': 'border-radius: 10px;'}}) }} <!-- Changed label name and added border radius -->
                 </div>
-                <div class="form-check mb-3">
-                    {{ form_row(registrationForm.agreeTerms, {'label_attr': {'class': 'form-check-label'}, 'attr': {'class': 'form-check-input'}}) }}
-                    <label class="form-check-label" for="{{ registrationForm.agreeTerms.vars.id }}">Agree to terms</label>
+                <div class="text-center"> <!-- Center the button horizontally -->
+                    <button type="submit" class="btn btn-primary" style="border-radius: 10px;">Register</button> <!-- Added border radius -->
                 </div>
-
-                <button type="submit" class="btn btn-primary">Register</button>
                 {{ form_end(registrationForm) }}
             </form>
         </div>

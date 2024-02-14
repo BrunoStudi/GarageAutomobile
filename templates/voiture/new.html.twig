@@ -3,46 +3,40 @@
 {% block title %}Ajouter une voiture{% endblock %}
 
 {% block body %}
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-6">
-                <div class="py-5">
-                    <h1 class="text-center mb-4">Ajouter une voiture</h1>
-                    <form method="post" action="{{ path('app_voiture_new') }}" enctype="multipart/form-data">
+    <div id="app" class="container shadow bg-white col-md-6 mt-5" style="border-radius: 10px;">
+        <div class="p-3">
+            <form method="post" action="{{ path('app_voiture_new') }}" enctype="multipart/form-data">
+                <h1 class="text-center mb-4">Ajouter une voiture</h1>
 
-                        <!-- Display form errors -->
-                        {{ form_errors(form) }}
+                <!-- Display form errors -->
+                {{ form_errors(form) }}
 
-                        <div class="row g-3">
-                            <div class="col-12">
-                                {{ form_label(form.Titre, 'Titre') }}
-                                {{ form_widget(form.Titre, {'attr': {'class': 'form-control'}}) }}
-                            </div>
-                            <div class="col-12">
-                                {{ form_label(form.Prix, 'Prix') }}
-                                {{ form_widget(form.Prix, {'attr': {'class': 'form-control'}}) }}
-                            </div>
-                            <div class="col-12">
-                                {{ form_label(form.AnneeCirculation, 'Année de circulation') }}
-                                {{ form_widget(form.AnneeCirculation, {'attr': {'class': 'form-control'}}) }}
-                            </div>
-                            <div class="col-12">
-                                {{ form_label(form.Kilometrage, 'Kilométrage') }}
-                                {{ form_widget(form.Kilometrage, {'attr': {'class': 'form-control'}}) }}
-                            </div>
-                            <div class="col-12">
-                                {{ form_label(form.image, 'Image') }}
-                                {{ form_widget(form.image, {'attr': {'class': 'form-control'}}) }}
-                            </div>
-                            <div class="col-12">
-                                <!-- CSRF token -->
-                                {{ form_widget(form._token) }}
-                                <button class="btn btn-primary w-100 py-3" type="submit">Ajouter</button>
-                            </div>
-                        </div>
-                    </form>
+                <div class="mb-3 col-md-12">
+                    {{ form_label(form.Titre, 'Titre', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.Titre, {'attr': {'class': 'form-control', 'style': 'border-radius: 10px;'}}) }}
                 </div>
-            </div>
+                <div class="mb-3 col-md-12">
+                    {{ form_label(form.Prix, 'Prix', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.Prix, {'attr': {'class': 'form-control', 'style': 'border-radius: 10px;'}}) }}
+                </div>
+                <div class="mb-3 col-md-12">
+                    {{ form_label(form.AnneeCirculation, 'Année de circulation', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.AnneeCirculation, {'attr': {'class': 'form-control', 'style': 'border-radius: 10px;'}}) }}
+                </div>
+                <div class="mb-3 col-md-12">
+                    {{ form_label(form.Kilometrage, 'Kilométrage', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.Kilometrage, {'attr': {'class': 'form-control', 'style': 'border-radius: 10px;'}}) }}
+                </div>
+                <div class="mb-3 col-md-12">
+                    {{ form_label(form.image, 'Image', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.image, {'attr': {'class': 'form-control', 'style': 'border-radius: 10px;'}}) }}
+                </div>
+                <div class="mb-3 mt-4 col-md-12 d-flex justify-content-center">
+                    <!-- CSRF token -->
+                    {{ form_widget(form._token) }}
+                    <button class="btn btn-primary" style="border-radius: 10px;">Ajouter</button>
+                </div>
+            </form>
         </div>
     </div>
 {% endblock %}

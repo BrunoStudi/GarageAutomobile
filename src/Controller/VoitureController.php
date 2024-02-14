@@ -72,33 +72,57 @@ class VoitureController extends AbstractController
 
 
 
-
-
     #[Route('/{id}/edit', name: 'app_voiture_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Voiture $voiture, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(VoitureType::class, $voiture);
-        $form->handleRequest($request);
+public function edit(Request $request, Voiture $voiture, EntityManagerInterface $entityManager, PictureService $pictureService): Response
+{
+    $form = $this->createForm(VoitureType::class, $voiture);
+    $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_voiture_index', [], Response::HTTP_SEE_OTHER);
+    if ($form->isSubmitted() && $form->isValid()) {
+        $images = $form->get('image')->getData();
+        
+        // Remove existing images
+        foreach ($voiture->getImages() as $image) {
+            $voiture->removeImage($image);
+            $entityManager->remove($image); // Optionally, delete the file from the storage
         }
+        
+        // Add new images
+        foreach ($images as $image) {
+            // Define destination folder
+            $folder = '';
+            // Add new image
+            $fichier = $pictureService->add($image, $folder);
 
-        return $this->render('voiture/edit.html.twig', [
-            'voiture' => $voiture,
-            'form' => $form,
-        ]);
+            $img = new Image();
+            $img->setName($fichier);
+            $voiture->addImage($img);
+        }
+        
+        // Persist changes
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_voiture_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/{id}', name: 'app_voiture_delete', methods: ['POST'])]
-    public function delete(Request $request, Voiture $voiture, EntityManagerInterface $entityManager): Response
+    return $this->render('voiture/edit.html.twig', [
+        'voiture' => $voiture,
+        'form' => $form->createView(),
+    ]);
+}
+
+
+
+
+
+
+    #[Route('/{id}', name: 'app_voiture_delete', methods: ['GET', 'POST'])]
+    public function delete(int $id ,Voiture $voiture, VoitureRepository $voitureRepository, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $voiture->getId(), $request->request->get('_token'))) {
+            $voiture = $voitureRepository->find($id);
             $entityManager->remove($voiture);
             $entityManager->flush();
-        }
+        
 
         return $this->redirectToRoute('app_voiture_index', [], Response::HTTP_SEE_OTHER);
     }
@@ -106,34 +130,34 @@ class VoitureController extends AbstractController
 
 
 
-    #[Route('/details/{id}', name: 'voiture_details')]
-    public function details(int $id, VoitureRepository $voitureRepository, Request $request): Response
-    {
-        $voiture = $voitureRepository->find($id);
+
+
+
+#[Route('/details/{id}', name: 'voiture_details', methods: ['GET', 'POST'])]
+public function details(int $id, VoitureRepository $voitureRepository, Request $request): Response
+{
+    $voiture = $voitureRepository->find($id);   
+    return $this->render('voiture/details.html.twig', [
+        'voiture' => $voiture,
+    ]);
+}
+
+
+
+
+#[Route('/details/contacts/{id}', name: 'contacts_details', methods: ['GET', 'POST'])]
+public function contacts(int $id, VoitureRepository $voitureRepository, Request $request): Response
+{
+    $voiture = $voitureRepository->find($id);
+    $contacts = $voiture->getFormulaireContact();
     
-        if (!$voiture) {
-            throw $this->createNotFoundException('Voiture not found');
-        }
-    
-        // Create an instance of the FormulaireContact entity
-        $formulaireContact = new FormulaireContact();
-    
-        // Create the contact form
-        $form = $this->createForm(FormulaireContactType::class, $formulaireContact);
-    
-        // Handle form submission
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            // Handle form submission logic here, such as sending an email
-            // Redirect or render a response after form submission
-        }
-    
-        return $this->render('voiture/details.html.twig', [
-            'voiture' => $voiture,
-            'form' => $form->createView(), // Pass the form view to the template
-        ]);
-    }
-    
+    return $this->render('voiture/consultecontact.html.twig', [
+        'contacts' => $contacts,
+    ]);
+}
+
+
+
 }
 
 

@@ -41,6 +41,10 @@ class Voiture
     private $images;
 
 
+    #[ORM\OneToMany(targetEntity: FormulaireContact::class, mappedBy: "voiture")]
+    private $formulairecontact;
+
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -106,6 +110,34 @@ class Voiture
         $this->utilisateur = $utilisateur;
         return $this;
     }
+
+    public function getFormulaireContact(): Collection
+{
+    return $this->formulairecontact;
+}
+
+public function addFormulaireContact(FormulaireContact $formulairecontact): self
+{
+    if (!$this->formulairecontact->contains($formulairecontact)) {
+        $this->formulairecontact[] = $formulairecontact;
+        $formulairecontact->setVoiture($this);
+    }
+
+    return $this;
+}
+
+public function removeFormulaireContact(FormulaireContact $formulairecontact): self
+{
+    if ($this->formulairecontact->removeElement($formulairecontact)) {
+        // set the owning side to null (unless already changed)
+        if ($formulairecontact->getVoiture() === $this) {
+            $formulairecontact->setVoiture(null);
+        }
+    }
+
+    return $this;
+}
+
 
 
 

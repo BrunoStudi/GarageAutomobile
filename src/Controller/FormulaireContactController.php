@@ -6,40 +6,58 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\Persistence\ManagerRegistry;
 use App\Form\FormulaireContactType;
 use App\Entity\FormulaireContact;
+use App\Entity\Voiture;
+use App\Repository\VoitureRepository;
+use App\Repository\FormulaireContactRepository;
+use Doctrine\ORM\EntityManagerInterface;
+
 
 class FormulaireContactController extends AbstractController
 {
-    private ManagerRegistry $doctrine;
 
-    public function __construct(ManagerRegistry $doctrine)
+
+
+    #[Route('/formulaire/contact/{id}', name: 'app_formulaire_contact')]
+    public function formulaireContact(int $id, Request $request, VoitureRepository $voitureRepository, EntityManagerInterface $entityManager): Response
     {
-        $this->doctrine = $doctrine;
-    }
+        $voiture = $voitureRepository->find($id);
 
-
-
-    #[Route('/formulaire/contact', name: 'app_formulaire_contact')]
-    public function formulaireContact(Request $request): Response
-    {
+        // Create a new FormulaireContact instance
         $formulaireContact = new FormulaireContact();
+
+        // Create the form
         $form = $this->createForm(FormulaireContactType::class, $formulaireContact);
 
+        // Handle form submission
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            // Set the voiture for the formulaireContact
+            $formulaireContact->setVoiture($voiture);
 
-
-            $entityManager = $this->doctrine->getManager();
+            // Persist and flush the formulaireContact
             $entityManager->persist($formulaireContact);
             $entityManager->flush();
 
             return $this->redirectToRoute('accueil_app');
         }
 
-        return $this->render('formulaire_contact/index.html.twig', [
+        return $this->render('formulaire_contact/new.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+
+
+    #[Route('/formulaire/contact/delete/{id}', name: 'delete_formulaire_contact', methods: ['GET', 'POST'])]
+    public function deleteFormulaireContact(FormulaireContact $formulaireContact, EntityManagerInterface $entityManager): Response
+    {
+
+        $voitureId = $formulaireContact->getVoiture()->getId();
+        $entityManager->remove($formulaireContact);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('voiture_details', ['id' => $voitureId]);
     }
 }

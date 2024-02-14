@@ -1,0 +1,29 @@
+{% extends 'basebackoffice.html.twig' %}
+
+{% block title %}Update User{% endblock %}
+
+{% block body %}
+    <div class="container mt-5 bg-white shadow-lg p-5"> <!-- Added bg-white for white background, shadow-lg for shadow, and padding -->
+        <div class="row justify-content-center"> <!-- Center the form horizontally -->
+            <div class="col-md-8"> <!-- Adjusted width of the column -->
+                <h1 class="text-center">Update User</h1>
+
+                <form method="post">
+                    {{ form_errors(form) }}
+
+                    {{ form_start(form) }}
+                    <div class="mb-4"> <!-- Increased margin bottom for more vertical space -->
+                        {{ form_row(form.email, {'attr': {'class': 'form-control', 'style': 'border-radius: 10px;'}}) }} <!-- Added border radius -->
+                    </div>
+                    <div class="mb-4"> <!-- Increased margin bottom for more vertical space -->
+                        {{ form_row(form.plainPassword, {'label': 'New Password', 'attr': {'class': 'form-control', 'placeholder': 'New Password', 'style': 'border-radius: 10px;'}}) }} <!-- Fixed missing comma -->
+                    </div>
+                    <div class="text-center"> <!-- Center the button horizontally -->
+                        <button type="submit" class="btn btn-primary" style="border-radius: 10px;">Update</button> <!-- Added border radius -->
+                    </div>
+                    {{ form_end(form) }}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
