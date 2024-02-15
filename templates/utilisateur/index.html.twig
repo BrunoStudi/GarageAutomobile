@@ -1,36 +1,48 @@
 {% extends 'basebackoffice.html.twig' %}
 
-{% block title %}Utilisateurs{% endblock %}
+{% block title %}Utilisateurs
+{% endblock %}
 
 {% block body %}
-    <div class="container mt-5 min-vh-100 d-flex flex-column">
-        <h1 class="text-center mb-4">Utilisateurs</h1>
-        <div class="table-responsive p-3 bg-white rounded shadow">
-            <table class="table table-bordered table-hover">
-                <thead class="thead-light">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Email</th>
-                        <th scope="col" class="text-center">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for user in employeUsers %}
-                        <tr>
-                            <th scope="row">{{ loop.index }}</th>
-                            <td>{{ user.email }}</td>
-                            <td class="text-center">
-                                <a href="{{ path('app_update_user', {'id': user.id}) }}" class="btn btn-primary btn-sm">
-                                    <i class="bi bi-pencil"></i> <!-- Icon for Update -->
-                                </a>
-                                <a href="{{ path('app_delete_user', {'id': user.id}) }}" class="btn btn-danger btn-sm">
-                                    <i class="bi bi-trash"></i> <!-- Icon for Delete -->
-                                </a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
+	<div class="container mt-5 d-flex flex-column">
+		<h1 class="text-center mb-4">Utilisateurs</h1>
+		<div class="table-responsive p-3 bg-white rounded shadow">
+			<table
+				class="table table-bordered table-hover mb-4">
+				<!-- Reduced margin-bottom -->
+				<thead class="thead-light">
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Email</th>
+						<th scope="col" class="text-center">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for user in employeUsers %}
+						<tr>
+							<th scope="row">{{ loop.index }}</th>
+							<td>{{ user.email }}</td>
+							<td class="text-center">
+								<a href="{{ path('app_update_user', {'id': user.id}) }}" class="btn btn-primary btn-sm">
+									<i class="bi bi-pencil"></i>
+									<!-- Icon for Update -->
+								</a>
+								<a href="{{ path('app_delete_user', {'id': user.id}) }}" class="btn btn-danger btn-sm">
+									<i class="bi bi-trash"></i>
+									<!-- Icon for Delete -->
+								</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+
+		<div
+			class="mt-5">
+			<!-- Add margin-top here -->
+			{% include 'staticservicelist.html.twig' %}
+		</div>
+
+	</div>
 {% endblock %}

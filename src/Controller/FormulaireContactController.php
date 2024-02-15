@@ -18,6 +18,7 @@ class FormulaireContactController extends AbstractController
 {
 
 
+    //////////////////////////////////////// Afficher Contact //////////////////////////////////////////
 
     #[Route('/formulaire/contact/{id}', name: 'app_formulaire_contact')]
     public function formulaireContact(int $id, Request $request, VoitureRepository $voitureRepository, EntityManagerInterface $entityManager): Response
@@ -49,15 +50,23 @@ class FormulaireContactController extends AbstractController
     }
 
 
+       //////////////////////////////////////// Supprimer contact //////////////////////////////////////////
 
     #[Route('/formulaire/contact/delete/{id}', name: 'delete_formulaire_contact', methods: ['GET', 'POST'])]
-    public function deleteFormulaireContact(FormulaireContact $formulaireContact, EntityManagerInterface $entityManager): Response
+    public function deleteFormulaireContact($id, EntityManagerInterface $entityManager): Response
     {
-
+        $formulaireContact = $entityManager->getRepository(FormulaireContact::class)->find($id);
+        
+        if (!$formulaireContact) {
+            throw $this->createNotFoundException('Formulaire contact not found');
+        }
+    
         $voitureId = $formulaireContact->getVoiture()->getId();
         $entityManager->remove($formulaireContact);
         $entityManager->flush();
-
+    
         return $this->redirectToRoute('voiture_details', ['id' => $voitureId]);
     }
+
+    
 }

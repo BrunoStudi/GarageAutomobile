@@ -1,29 +1,63 @@
 {% extends 'basebackoffice.html.twig' %}
 
-{% block title %}Update User{% endblock %}
+{% block title %}Ajouter Employé{% endblock %}
 
 {% block body %}
-    <div class="container mt-5 bg-white shadow-lg p-5"> <!-- Added bg-white for white background, shadow-lg for shadow, and padding -->
-        <div class="row justify-content-center"> <!-- Center the form horizontally -->
-            <div class="col-md-8"> <!-- Adjusted width of the column -->
-                <h1 class="text-center">Modifier employé</h1>
+<style>
+    /* Custom styles for the form container */
+    .form-container {
+        background-color: #fff; /* White background */
+        border-radius: 10px; /* Rounded corners */
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+        padding: 20px; /* Add some padding */
+        margin: 50px auto 0; /* Center horizontally and add top margin */
+        max-width: 800px; /* Doubled the max-width */
+    }
 
+    /* Custom styles for centering the button */
+    .btn-center {
+        text-align: center; /* Center align button */
+    }
+
+    /* Custom styles for increasing the size of label text */
+    .form-label {
+        font-size: 18px; /* Increase label font size */
+    }
+
+    /* Custom styles for h1 element */
+    .form-title {
+        font-size: 24px; /* Increase h1 font size */
+        margin-bottom: 30px; /* Add bottom margin */
+        color: #333; /* Change text color */
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="form-container">
+                <h1 class="text-center form-title">Mettre à jours employé</h1> <!-- Improved h1 display -->
                 <form method="post">
                     {{ form_errors(form) }}
-
                     {{ form_start(form) }}
-                    <div class="mb-4"> <!-- Increased margin bottom for more vertical space -->
-                        {{ form_row(form.email, {'attr': {'class': 'form-control', 'style': 'border-radius: 10px;'}}) }} <!-- Added border radius -->
+                    <div class="mb-4">
+                        {{ form_row(form.email, {'attr': {'class': 'form-control'}}) }}
                     </div>
-                    <div class="mb-4"> <!-- Increased margin bottom for more vertical space -->
-                        {{ form_row(form.plainPassword, {'label': 'Mot de passe', 'attr': {'class': 'form-control', 'placeholder': 'New Password', 'style': 'border-radius: 10px;'}}) }} <!-- Fixed missing comma -->
+                    <div class="mb-4">
+                        {{ form_row(form.plainPassword, {'label': 'Mot de Passe', 'attr': {'class': 'form-control'}}) }}
                     </div>
-                    <div class="text-center"> <!-- Center the button horizontally -->
-                        <button type="submit" class="btn btn-primary" style="border-radius: 10px;">Mettre à jours</button> <!-- Added border radius -->
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary btn-center">Mettre à jours</button>
                     </div>
                     {{ form_end(form) }}
                 </form>
             </div>
         </div>
     </div>
+</div>
+
+<div class="mt-5">
+    {% include 'staticservicelist.html.twig' %}
+</div>
+
 {% endblock %}

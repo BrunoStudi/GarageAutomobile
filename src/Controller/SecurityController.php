@@ -13,7 +13,7 @@ use App\Repository\TemoignageRepository;
 class SecurityController extends AbstractController
 {
 
-
+   //////////////////////////////////////// route du page d'accueil + l'envoi des temoignages vers la page d'accueil  //////////////////////////////////////////
     #[Route('/accueil', name: 'accueil_app')]
     public function index(TemoignageRepository $temoignageRepository): Response
     {
@@ -29,6 +29,7 @@ class SecurityController extends AbstractController
     }
 
 
+   //////////////////////////////////////// route vers la page du profil connecté  //////////////////////////////////////////
 
     #[Route('/profil', name: 'profil_app')]
     public function profil(): Response
@@ -53,7 +54,7 @@ class SecurityController extends AbstractController
     }
 
 
-
+   //////////////////////////////////////// Route du déconnection  //////////////////////////////////////////
     #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): void
     {

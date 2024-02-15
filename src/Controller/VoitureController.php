@@ -21,6 +21,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class VoitureController extends AbstractController
 {
 
+
+    
     #[Route('/', name: 'app_voiture_index', methods: ['GET'])]
     public function index(VoitureRepository $voitureRepository): Response
     {
@@ -38,10 +40,10 @@ class VoitureController extends AbstractController
         // Retrieve min and max price values from the AJAX request
         $minPrice = (float) $request->request->get('minPrice');
         $maxPrice = (float) $request->request->get('maxPrice');
-    
+
         // Query the database to fetch cars within the specified price range
         $cars = $voitureRepository->findByPriceRange($minPrice, $maxPrice);
-    
+
         // Serialize the result to JSON with photo paths included
         $serializedCars = [];
         foreach ($cars as $car) {
@@ -49,9 +51,9 @@ class VoitureController extends AbstractController
             if ($car->getImages()->count() > 0) {
                 $photoPath = '/uploads/voiture' . '/' . $car->getImages()->first()->getName();
             }
-    
+
             $logger->info('Photo path for car ID ' . $car->getId() . ': ' . $photoPath);
-    
+
             $serializedCars[] = [
                 'id' => $car->getId(),
                 'Titre' => $car->getTitre(),
@@ -59,10 +61,10 @@ class VoitureController extends AbstractController
                 // Add other properties you want to include in the response
             ];
         }
-    
+
         return new JsonResponse($serializedCars);
     }
-    
+
 
 
 
@@ -109,14 +111,16 @@ class VoitureController extends AbstractController
 
 
     #[Route('/{id}/edit', name: 'app_voiture_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Voiture $voiture, EntityManagerInterface $entityManager, PictureService $pictureService): Response
-    {
-        $form = $this->createForm(VoitureType::class, $voiture);
-        $form->handleRequest($request);
+public function edit(Request $request, Voiture $voiture, EntityManagerInterface $entityManager, PictureService $pictureService): Response
+{
+    $form = $this->createForm(VoitureType::class, $voiture);
+    $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $images = $form->get('image')->getData();
-
+    if ($form->isSubmitted() && $form->isValid()) {
+        // Check if new images are selected
+        $images = $form->get('image')->getData();
+        
+        if (!empty($images)) {
             // Remove existing images
             foreach ($voiture->getImages() as $image) {
                 $voiture->removeImage($image);
@@ -134,18 +138,20 @@ class VoitureController extends AbstractController
                 $img->setName($fichier);
                 $voiture->addImage($img);
             }
-
-            // Persist changes
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_voiture_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('voiture/edit.html.twig', [
-            'voiture' => $voiture,
-            'form' => $form->createView(),
-        ]);
+        // Persist changes
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_voiture_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    return $this->render('voiture/edit.html.twig', [
+        'voiture' => $voiture,
+        'form' => $form->createView(),
+    ]);
+}
+
 
 
 
@@ -173,8 +179,11 @@ class VoitureController extends AbstractController
     public function details(int $id, VoitureRepository $voitureRepository, Request $request): Response
     {
         $voiture = $voitureRepository->find($id);
+        $contacts = $voiture->getFormulaireContact();
+
         return $this->render('voiture/details.html.twig', [
             'voiture' => $voiture,
+            'contacts' => $contacts,
         ]);
     }
 

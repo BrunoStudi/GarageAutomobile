@@ -1,71 +1,64 @@
 {% extends 'basebackoffice.html.twig' %}
 
-{% block title %}Créer Horaires d'Ouverture
-{% endblock %}
+{% block title %}Créer Horaires d'Ouverture{% endblock %}
 
 {% block body %}
-	<div
-		class="container mt-4">
-		<!-- Added margin top here -->
-		<h1 class="text-center mb-4">Créer Horaires d'Ouverture</h1>
-		<div class="row justify-content-center">
-			<div class="col-md-6">
-				<form method="post">
-					<div class="mb-3">
-						{{ form_label(form.Jour, 'Jour', {'label_attr': {'class': 'form-label'}}) }}
-						{{ form_widget(form.Jour, {'attr': {'class': 'form-control'}}) }}
-					</div>
-					<div class="mb-3">
-						{{ form_label(form.Horaire, 'Horaire ouverture', {'label_attr': {'class': 'form-label'}}) }}
-						{{ form_widget(form.Horaire, {'attr': {'class': 'form-control'}}) }}
-					</div>
-					{{ form_row(form._token) }}
-					<div
-						class="mb-3 mt-4">
-						<!-- Added margin top here -->
-						<button type="submit" class="btn btn-primary">Mettre à jours</button>
-						<a href="{{ path('horaires_ouverture') }}" class="btn btn-primary">Annuler</a>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+    <style>
+        /* Custom styles for the form container */
+        .form-container {
+            background-color: #fff; /* White background */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+            padding: 20px; /* Add some padding */
+        }
 
-	<!-- Début des Services -->
-	<div class="container-xxl py-5">
-		<div class="container">
-			<div class="row g-4">
-				<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-					<div class="d-flex py-5 px-4">
-						<i class="fa fa-certificate fa-3x text-primary flex-shrink-0"></i>
-						<div class="ps-4">
-							<h5 class="mb-3">Service de qualité</h5>
-							<p>Profitez de notre service de qualité supérieure pour assurer la longévité de votre véhicule et garantir votre satisfaction.</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-					<div class="d-flex bg-light py-5 px-4">
-						<i class="fa fa-users-cog fa-3x text-primary flex-shrink-0"></i>
-						<div class="ps-4">
-							<h5 class="mb-3">Travailleurs experts</h5>
-							<p>Nos travailleurs experts sont hautement qualifiés et formés pour répondre à tous vos besoins en matière de réparation et d'entretien automobile.</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-					<div class="d-flex py-5 px-4">
-						<i class="fa fa-tools fa-3x text-primary flex-shrink-0"></i>
-						<div class="ps-4">
-							<h5 class="mb-3">Équipement moderne</h5>
-							<p>Notre équipement moderne et à la pointe de la technologie nous permet d'effectuer des réparations et des diagnostics précis pour votre voiture.</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Fin des Services -->
+        /* Custom styles for centering the button */
+        .btn-center {
+            text-align: center; /* Center align button */
+        }
 
+        /* Custom styles for increasing the size of label text */
+        .form-label {
+            font-size: 18px; /* Increase label font size */
+        }
 
+        /* Custom styles for the h1 element */
+        .form-title {
+            text-align: center; /* Center align the title */
+            font-size: 24px; /* Increase font size */
+            margin-bottom: 30px; /* Add some bottom margin for spacing */
+            color: #333; /* Change text color */
+        }
+
+        /* Custom styles to move the form down */
+        .form-wrapper {
+            margin-top: 50px; /* Add some top margin to move the form down */
+        }
+    </style>
+
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-6 form-wrapper"> <!-- Added custom class for form wrapper -->
+                <form method="post" class="form-container">
+                    <h1 class="form-title">Mettre à jours Horaires d'ouverture</h1> <!-- Improved h1 display -->
+                    <div class="mb-3">
+                        {{ form_label(form.Jour, 'Jour :', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.Jour, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form_label(form.Horaire, 'Horaire ouverture :', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.Horaire, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    {{ form_row(form._token) }}
+                    <div class="mb-3 mt-4 btn-center">
+                        <button type="submit" class="btn btn-primary">Mettre à jours</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-5">
+        {% include 'staticservicelist.html.twig' %}
+    </div>
 {% endblock %}
