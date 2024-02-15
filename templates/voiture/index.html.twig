@@ -10,8 +10,17 @@
             <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
                 <h1 class="mb-5">Voitures</h1>
             </div>
-            <div class="row g-4">
-                {% for voiture in voitures %}
+            <!-- Range Slider -->
+            <div class="mb-3">
+                <div id="price-range"></div>
+                <div id="price-range-values" class="text-center mt-2">
+                    Min: <span id="min-value"></span> | Max: <span id="max-value"></span>
+                </div>
+            </div>
+            <!-- End Range Slider -->
+            <div class="row g-4" id="car-list">
+                <!-- Include the car items -->
+                     {% for voiture in voitures %}
                     <div class="col-lg-4 col-md-6 col-sm-12 wow fadeInUp" data-wow-delay="0.{{ loop.index }}">
                         <div class="team-item">
                             <div class="position-relative overflow-hidden">
@@ -27,9 +36,7 @@
                             </div>
                             <div class="bg-light text-center p-4">
                                 <h5 class="fw-bold mb-3">Marque & Modele : {{ voiture.Titre }}</h5>
-
                                 <!-- Add any other details you want to display here -->
-
                             </div>
                         </div>
                     </div>
@@ -39,26 +46,94 @@
     </div>
     <!-- Voitures End -->
 
-    <!-- Custom CSS for image container -->
-    <style>
-        .img-container {
-            width: 100%;
-            overflow: hidden;
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script> <!-- Include WOW.js library -->
+    <!-- Custom script for initializing the slider and handling AJAX request -->
+    <script>
+        $(document).ready(function () {
+    var slider = document.getElementById('price-range');
+    var minValue = document.getElementById('min-value');
+    var maxValue = document.getElementById('max-value');
+    var previousValues = [0, 100000]; // Initialize previous values
+    var delayTimer; // Initialize timer variable for delay
+    var sliderInteracted = false; // Flag to track slider interaction
+
+    noUiSlider.create(slider, {
+        start: previousValues, // Initial values
+        connect: true,
+        range: {
+            'min': 0,
+            'max': 100000
+        }
+    });
+
+    slider.noUiSlider.on('update', function (values, handle) {
+        minValue.innerText = values[0];
+        maxValue.innerText = values[1];
+    });
+
+    slider.noUiSlider.on('change', function (values, handle) {
+        // Set the flag to true when slider is interacted with
+        if (!sliderInteracted) {
+            sliderInteracted = true;
         }
 
-        .img-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        // Clear previous delay timer
+        clearTimeout(delayTimer);
 
-        .button-group {
-            margin-top: 10px; /* Adjust the spacing between the buttons */
-        }
+        // Set new delay timer for 1 second only if slider is interacted with
+        if (sliderInteracted) {
+            delayTimer = setTimeout(function () {
+                if (values[0] !== previousValues[0] || values[1] !== previousValues[1]) {
+                    $.ajax({
+                        url: "{{ path('filter_cars') }}",
+                        method: "POST",
+                        data: {
+                            minPrice: values[0],
+                            maxPrice: values[1]
+                        },
+                        success: function (response) {
+                            updateCarList(response);
+                            new WOW().init(); // Initialize WOW.js for animation
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(error);
+                        }
+                    });
 
-        .button-group .btn {
-            margin-right: 10px; /* Adjust the spacing between the buttons */
+                    previousValues = [values[0], values[1]]; // Update previous values
+                }
+            }, 1000); // Set delay to 1 second
         }
-    </style>
+    });
 
+    function updateCarList(cars) {
+        var carList = $('#car-list');
+        carList.empty(); // Clear existing car list
+
+        cars.forEach(function (car) {
+            var carItem = `
+                <div class="col-lg-4 col-md-6 col-sm-12 wow fadeInUp">
+                    <div class="team-item">
+                        <div class="position-relative overflow-hidden">
+                            <div class="img-container" style="height: 300px;">
+                                <img src="${car.imageUrl}" alt="${car.Titre}" class="img-thumbnail" style="object-fit: cover; width: 100%;">
+                            </div>
+                            <div class="team-overlay position-absolute start-0 top-0 w-100 h-100">
+                                <a href="${car.detailsUrl}" class="btn btn-primary" style="border-radius: 10px;">Plus de détails</a>
+                            </div>
+                        </div>
+                        <div class="bg-light text-center p-4">
+                            <h5 class="fw-bold mb-3">Marque & Modele: ${car.Titre}</h5>
+                        </div>
+                    </div>
+                </div>`;
+            carList.append(carItem);
+        });
+    }
+});
+
+    </script>
 {% endblock %}

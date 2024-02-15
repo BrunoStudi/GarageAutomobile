@@ -48,4 +48,14 @@ class Image
 
         return $this;
     }
+
+    public function getImageUrl(string $imagesDirectory): ?string
+    {
+        if (!$this->name) {
+            return null;
+        }
+
+        return $imagesDirectory . '/' . $this->name;
+    }
+    
 }

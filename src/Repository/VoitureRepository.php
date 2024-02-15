@@ -21,28 +21,39 @@ class VoitureRepository extends ServiceEntityRepository
         parent::__construct($registry, Voiture::class);
     }
 
-//    /**
-//     * @return Voiture[] Returns an array of Voiture objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('v')
-//            ->andWhere('v.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('v.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findByPriceRange(float $minPrice, float $maxPrice): array
+    {
+        return $this->createQueryBuilder('v')
+            ->andWhere('v.Prix >= :minPrice')
+            ->andWhere('v.Prix <= :maxPrice')
+            ->setParameter('minPrice', $minPrice)
+            ->setParameter('maxPrice', $maxPrice)
+            ->getQuery()
+            ->getResult();
+    }
 
-//    public function findOneBySomeField($value): ?Voiture
-//    {
-//        return $this->createQueryBuilder('v')
-//            ->andWhere('v.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    //    /**
+    //     * @return Voiture[] Returns an array of Voiture objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('v')
+    //            ->andWhere('v.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('v.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
+
+    //    public function findOneBySomeField($value): ?Voiture
+    //    {
+    //        return $this->createQueryBuilder('v')
+    //            ->andWhere('v.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }

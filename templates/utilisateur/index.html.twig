@@ -2,41 +2,24 @@
 
 {% block title %}Utilisateurs{% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <style>
-        .table {
-            background-color: white;
-        }
-        .table thead th {
-            text-align: center;
-        }
-        .action-column {
-            width: 100px; /* Adjust the width as needed */
-        }
-    </style>
-{% endblock %}
-
 {% block body %}
-    <div class="container mt-5">
+    <div class="container mt-5 min-vh-100 d-flex flex-column">
         <h1 class="text-center mb-4">Utilisateurs</h1>
-        <div class="table-responsive">
+        <div class="table-responsive p-3 bg-white rounded shadow">
             <table class="table table-bordered table-hover">
-                <thead>
+                <thead class="thead-light">
                     <tr>
-                        <th>#</th>
-                        <th>Nom d'utilisateur</th>
-                        <th>Email</th>
-                        <th class="text-center action-column">Actions</th>
+                        <th scope="col">#</th>
+                        <th scope="col">Email</th>
+                        <th scope="col" class="text-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for user in employeUsers %}
                         <tr>
-                            <td>{{ loop.index }}</td>
-                            <td>{{ user.username }}</td>
+                            <th scope="row">{{ loop.index }}</th>
                             <td>{{ user.email }}</td>
-                            <td class="text-center action-column">
+                            <td class="text-center">
                                 <a href="{{ path('app_update_user', {'id': user.id}) }}" class="btn btn-primary btn-sm">
                                     <i class="bi bi-pencil"></i> <!-- Icon for Update -->
                                 </a>
