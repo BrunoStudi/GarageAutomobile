@@ -1,30 +1,30 @@
 {% extends is_granted('IS_AUTHENTICATED_FULLY') ? 'basebackoffice.html.twig' : 'base.html.twig' %}
 
-{% block title %}Voiture index{% endblock %}
+{% block title %}Index des voitures{% endblock %}
 
 {% block body %}
 
     <style>
-        /* Custom CSS for red range slider */
+        /* CSS personnalisé pour le curseur de plage de prix rouge */
         .slider-red .noUi-connect {
             background: #D81324; /* Utilise la couleur rouge #D81324 pour le curseur de la plage de valeurs */
         }
-        /* Center the h1 element */
+        /* Centrer l'élément h1 */
         h1 {
             text-align: center;
-            margin-top: 30px; /* Add some margin bottom */
+            margin-top: 30px; /* Ajouter un peu de marge en bas */
         }
     </style>
 
     <h1 class="mb-5">Voitures à vendre</h1>
 
-    <!-- Voitures Start -->
+    <!-- Début des voitures -->
     <div class="container-xxl py-5">
         <div class="container">
             <div class="text-center wow fadeInUp" data-wow-delay="0.1s"></div>
 
             {% if not is_granted('ROLE_EMPLOYE') %}
-                <!-- Range Slider -->
+                <!-- Curseur de plage de prix -->
                 <div class="mb-3">
                     <div id="price-range" class="slider-red"></div>
                     <!-- Ajouter la classe personnalisée pour le curseur rouge -->
@@ -32,23 +32,23 @@
                         Min:
                         <span id="min-value"></span>&euro; | Max:
                         <span id="max-value"></span>&euro;
-                        <!-- Add euro symbol -->
+                        <!-- Ajouter le symbole euro -->
                     </div>
                 </div>
-                <!-- End Range Slider -->
+                <!-- Fin du curseur de plage de prix -->
             {% endif %}
 
             <div class="row g-4" id="car-list">
-                <!-- Include the car items -->
+                <!-- Inclure les éléments de voiture -->
                 {% for voiture in voitures %}
                     <div class="col-lg-4 col-md-6 col-sm-12 wow fadeInUp" data-wow-delay="0.{{ loop.index }}">
                         <div class="team-item">
                             <div class="position-relative overflow-hidden">
                                 <div class="img-container" style="height: 300px; width: 100%; overflow: hidden;">
-                                    <!-- Set fixed dimensions for the image container and hide overflow -->
+                                    <!-- Définir des dimensions fixes pour le conteneur d'image et masquer le débordement -->
                                     {% if voiture.images|length > 0 %}
                                         <img src="{{ asset('uploads/voiture/' ~ voiture.images[0].name ) }}" alt="{{ voiture.Titre }}" class="img-thumbnail" style="object-fit: cover; width: 100%; height: 100%;">
-                                    <!-- Set image size to cover the container -->
+                                    <!-- Définir la taille de l'image pour couvrir le conteneur -->
                                     {% endif %}
                                 </div>
                                 <div class="team-overlay position-absolute start-0 top-0 w-100 h-100">
@@ -56,8 +56,8 @@
                                 </div>
                             </div>
                             <div class="bg-light text-center p-4">
-                                <h5 class="fw-bold mb-3">Marque & Modele : {{ voiture.Titre }}</h5>
-                                <!-- Add any other details you want to display here -->
+                                <h5 class="fw-bold mb-3">Marque & Modèle : {{ voiture.Titre }}</h5>
+                                <!-- Ajouter d'autres détails que vous souhaitez afficher ici -->
                             </div>
                         </div>
                     </div>
@@ -65,26 +65,26 @@
             </div>
         </div>
     </div>
-    <!-- Voitures End -->
+    <!-- Fin des voitures -->
 
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
-    <!-- Include WOW.js library -->
-    <!-- Custom script for initializing the slider and handling AJAX request -->
+    <!-- Inclure la bibliothèque WOW.js -->
+    <!-- Script personnalisé pour initialiser le curseur et gérer la requête AJAX -->
 
     <script>
         $(document).ready(function () {
             var slider = document.getElementById('price-range');
             var minValue = document.getElementById('min-value');
             var maxValue = document.getElementById('max-value');
-            var previousValues = [0, 100000]; // Initialize previous values
-            var delayTimer; // Initialize timer variable for delay
-            var sliderInteracted = false; // Flag to track slider interaction
+            var previousValues = [0, 100000]; // Initialise les valeurs précédentes
+            var delayTimer; // Initialise la variable pour le délai
+            var sliderInteracted = false; // Drapeau pour suivre l'interaction avec le curseur
 
             noUiSlider.create(slider, {
-                start: previousValues, // Initial values
+                start: previousValues, // Valeurs initiales
                 connect: true,
                 range: {
                     'min': 0,
@@ -92,27 +92,25 @@
                 }
             });
 
-            slider.noUiSlider.on('update', function (values, handle) { // Format values with space every three digits from right to left
+            slider.noUiSlider.on('update', function (values, handle) { // Mettre à jour les valeurs min et max pendant le glissement du curseur
                 minValue.innerText = formatNumber(values[0]);
                 maxValue.innerText = formatNumber(values[1]);
             });
 
-            function formatNumber(number) {
+            function formatNumber(number) { // Formater le nombre avec un espace tous les trois chiffres de droite à gauche
                 return parseFloat(number).toLocaleString('fr-FR');
             }
 
-            slider.noUiSlider.on('change', function (values, handle) { // Set the flag to true when slider is interacted with
-                if (! sliderInteracted) {
+            slider.noUiSlider.on('change', function (values, handle) { // Écouter l'événement de changement du curseur
+                if (!sliderInteracted) {
                     sliderInteracted = true;
                 }
 
-                // Clear previous delay timer
-                clearTimeout(delayTimer);
+                clearTimeout(delayTimer); // Effacer le timer de délai précédent
 
-                // Set new delay timer for 1 second only if slider is interacted with
                 if (sliderInteracted) {
-                    delayTimer = setTimeout(function () {
-                        if (values[0] !== previousValues[0] || values[1] !== previousValues[1]) {
+                    delayTimer = setTimeout(function () { // Définir un nouveau timer de délai de 1 seconde seulement si le curseur est interactif
+                        if (values[0] !== previousValues[0] || values[1] !== previousValues[1]) { // Effectuer une requête AJAX pour filtrer les voitures en fonction des valeurs de prix
                             $.ajax({
                                 url: "{{ path('filter_cars') }}",
                                 method: "POST",
@@ -120,28 +118,26 @@
                                     minPrice: values[0],
                                     maxPrice: values[1]
                                 },
-                                success: function (response) {
+                                success: function (response) { // Mettre à jour la liste des voitures avec la réponse AJAX
                                     updateCarList(response);
-                                    new WOW().init(); // Initialize WOW.js for animation
+                                    new WOW().init(); // Initialiser WOW.js pour l'animation
                                 },
                                 error: function (xhr, status, error) {
                                     console.error(error);
                                 }
                             });
 
-                            previousValues = [
-                                values[0], values[1]
-                            ]; // Update previous values
+                            previousValues = [values[0], values[1]]; // Mettre à jour les valeurs précédentes
                         }
-                    }, 1000); // Set delay to 1 second
+                    }, 1000); // Définir un délai à 1 seconde
                 }
             });
 
-            function updateCarList(cars) {
+            function updateCarList(cars) { // Mettre à jour la liste des voitures avec la réponse AJAX
                 var carList = $('#car-list');
-                carList.empty(); // Clear existing car list
+                carList.empty(); // Effacer la liste des voitures existante
 
-                cars.forEach(function (car) {
+                cars.forEach(function (car) { // Construire l'élément HTML pour chaque voiture
                     var carItem = `
                         <div class="col-lg-4 col-md-6 col-sm-12 wow fadeInUp">
                             <div class="team-item">
@@ -154,18 +150,17 @@
                                     </div>
                                 </div>
                                 <div class="bg-light text-center p-4">
-                                    <h5 class="fw-bold mb-3">Marque & Modele: ${car.Titre}</h5>
+                                    <h5 class="fw-bold mb-3">Marque & Modèle : ${car.Titre}</h5>
                                 </div>
                             </div>
                         </div>`;
-                    carList.append(carItem);
+                    carList.append(carItem); // Ajouter l'élément à la liste des voitures
                 });
 
-                // Attach event listener to dynamically created buttons
-                $('.details-btn').click(function (e) {
+                $('.details-btn').click(function (e) { // Attacher un écouteur d'événements aux boutons créés dynamiquement
                     e.preventDefault();
                     var detailsUrl = $(this).data('details-url');
-                    window.location.href = detailsUrl;
+                    window.location.href = detailsUrl; // Rediriger vers l'URL des détails de la voiture
                 });
             }
         });

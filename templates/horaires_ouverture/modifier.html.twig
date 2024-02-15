@@ -4,43 +4,42 @@
 
 {% block body %}
     <style>
-        /* Custom styles for the form container */
         .form-container {
-            background-color: #fff; /* White background */
-            border-radius: 10px; /* Rounded corners */
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
-            padding: 20px; /* Add some padding */
+            background-color: #fff;
+            border-radius: 10px; 
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px; 
         }
 
-        /* Custom styles for centering the button */
+ 
         .btn-center {
-            text-align: center; /* Center align button */
+            text-align: center; 
         }
 
-        /* Custom styles for increasing the size of label text */
+        
         .form-label {
-            font-size: 18px; /* Increase label font size */
+            font-size: 18px; 
         }
 
-        /* Custom styles for the h1 element */
+        
         .form-title {
-            text-align: center; /* Center align the title */
-            font-size: 24px; /* Increase font size */
-            margin-bottom: 30px; /* Add some bottom margin for spacing */
-            color: #333; /* Change text color */
+            text-align: center; 
+            font-size: 24px; 
+            margin-bottom: 30px;
+            color: #333; 
         }
 
-        /* Custom styles to move the form down */
+      
         .form-wrapper {
-            margin-top: 50px; /* Add some top margin to move the form down */
+            margin-top: 50px; 
         }
     </style>
 
     <div class="container mt-4">
         <div class="row justify-content-center">
-            <div class="col-md-6 form-wrapper"> <!-- Added custom class for form wrapper -->
+            <div class="col-md-6 form-wrapper"> 
                 <form method="post" class="form-container">
-                    <h1 class="form-title">Mettre à jours Horaires d'ouverture</h1> <!-- Improved h1 display -->
+                    <h1 class="form-title">Mettre à jours horaires d'ouverture</h1> 
                     <div class="mb-3">
                         {{ form_label(form.Jour, 'Jour :', {'label_attr': {'class': 'form-label'}}) }}
                         {{ form_widget(form.Jour, {'attr': {'class': 'form-control'}}) }}

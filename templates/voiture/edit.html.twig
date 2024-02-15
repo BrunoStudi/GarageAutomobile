@@ -8,7 +8,7 @@
             <form method="post" action="{{ path('app_voiture_edit', {'id': voiture.id}) }}" enctype="multipart/form-data">
                 <h1 class="text-center mb-4">Modifier une voiture</h1>
 
-                <!-- Display form errors -->
+
                 {{ form_errors(form) }}
 
                 <div class="mb-3 col-md-12">
@@ -32,7 +32,7 @@
                     {{ form_widget(form.image, {'attr': {'class': 'form-control', 'style': 'border-radius: 10px;'}}) }}
                 </div>
                 <div class="mb-3 mt-4 col-md-12 d-flex justify-content-center">
-                    <!-- CSRF token -->
+
                     {{ form_widget(form._token) }}
                     <button class="btn btn-primary">Modifier</button>
                 </div>

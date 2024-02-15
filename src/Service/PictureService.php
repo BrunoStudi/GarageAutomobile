@@ -15,25 +15,29 @@ class PictureService
         $this->params = $params;
     }
 
+    // Méthode pour ajouter une image
     public function add(UploadedFile $picture, ?string $folder = '')
     {
-        // Generate a unique filename for the image
+        // Générer un nom de fichier unique pour l'image
         $filename = md5(uniqid(rand(), true)) . '.' . $picture->getClientOriginalExtension();
 
+        // Récupérer le chemin du répertoire de destination depuis les paramètres
         $path = $this->params->get('images_directory') . $folder;
 
-        // Move the uploaded file to the destination directory
+        // Déplacer le fichier téléchargé vers le répertoire de destination
         $picture->move($path, $filename);
 
+        // Retourner le nom du fichier
         return $filename;
     }
 
+    // Méthode pour supprimer une image
     public function delete(string $filename, ?string $folder = '')
     {
-        // Construct the full path to the image file
+        // Construire le chemin complet vers le fichier image
         $path = $this->params->get('images_directory') . $folder . '/' . $filename;
 
-        // Check if the file exists and delete it
+        // Vérifier si le fichier existe et le supprimer
         if (file_exists($path)) {
             unlink($path);
             return true;

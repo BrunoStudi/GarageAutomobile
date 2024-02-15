@@ -9,7 +9,6 @@
 		<div class="table-responsive p-3 bg-white rounded shadow">
 			<table
 				class="table table-bordered table-hover mb-4">
-				<!-- Reduced margin-bottom -->
 				<thead class="thead-light">
 					<tr>
 						<th scope="col">#</th>
@@ -25,11 +24,9 @@
 							<td class="text-center">
 								<a href="{{ path('app_update_user', {'id': user.id}) }}" class="btn btn-primary btn-sm">
 									<i class="bi bi-pencil"></i>
-									<!-- Icon for Update -->
 								</a>
 								<a href="{{ path('app_delete_user', {'id': user.id}) }}" class="btn btn-danger btn-sm">
 									<i class="bi bi-trash"></i>
-									<!-- Icon for Delete -->
 								</a>
 							</td>
 						</tr>
@@ -40,7 +37,6 @@
 
 		<div
 			class="mt-5">
-			<!-- Add margin-top here -->
 			{% include 'staticservicelist.html.twig' %}
 		</div>
 
