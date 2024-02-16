@@ -27,8 +27,8 @@ security:
                 always_remember_me: true
 
     role_hierarchy:
-        ROLE_ADMIN: [ROLE_MANAGER, ROLE_EMPLOYEE] # Example role hierarchy
+        ROLE_ADMIN: [ROLE_MANAGER, ROLE_EMPLOYEE] 
 
     access_control:
-        - { path: '^/admin', roles: ROLE_ADMIN } # Example access control rule
+        - { path: '^/admin', roles: ROLE_ADMIN } 
         - { path: '^/employe', roles: ROLE_EMPLOYE }
