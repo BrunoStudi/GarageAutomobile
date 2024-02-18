@@ -32,7 +32,11 @@ class VoitureType extends AbstractType
                 'constraints' => [
                     new All(
                         new Image([
+<<<<<<< HEAD
                             'maxWidth' => 1280,
+=======
+                            'maxWidth' => 3840,
+>>>>>>> master
                             'maxWidthMessage' => 'L\'image doit faire {{ max_width }} pixels de large au maximum'
                         ])
                     )
