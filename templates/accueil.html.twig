@@ -67,7 +67,6 @@
 									<h5 class="mb-3">{{ temoignage.Nom }}</h5>
 									<p>{{ temoignage.Commentaire }}</p>
 									<p>Note :
-<<<<<<< HEAD
 										{% set filledStars = temoignage.Note %}
 										{% set emptyStars = 5 - filledStars %}
 										{% for i in 1..filledStars %}
@@ -75,14 +74,6 @@
 										{% endfor %}
 										{% for i in 1..emptyStars %}
 											<i class="fa fa-star text-secondary"></i>
-=======
-										{% for i in 1..5 %}
-											{% if i <= temoignage.Note %}
-												<i class="fa fa-star text-warning"></i>
-											{% else %}
-												<i class="fa fa-star text-secondary"></i>
-											{% endif %}
->>>>>>> master
 										{% endfor %}
 									</p>
 								</div>
