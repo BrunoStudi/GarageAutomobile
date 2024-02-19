@@ -35,15 +35,50 @@ CREATE DATABASE garageautomobile;
 
 Fichier SQL de la base de donnée à importer: https://mega.nz/file/EGt32DRL#YXnXECUh1hOXZ7tCwhVQOQ6HWQMDuQB1Kah6T9a_eJk
 
-ensuite importez la base de donnée fournie, il n'existe pas de commande en SQL pour importer un fichier,
+ensuite importez la base de donnée fournie, il n'existe pas de commande en SQL pour importer un fichier directement,
 donc il suffit de cliquer sur la base de donnée créé un peu plus tôt et de ce rendre sur "importer" dans les onglets supérieurs de MyPHPadmin puis
 de choisir le fichier en .sql dans fichier à importer laisser toutes les options par defaut puis tout en bas cliquez sur "importer".
 
 sinon en ligne de commande terminal:
 
-mysql -u username -p nom_de_la_base_de_donnée < fichier.sql
+mysql -u nom_utilisateur -p nom_de_la_base_de_donnée < garageautomobile.sql
 
 ensuite la nouvelle base de donnée devrait apparaitre dans PHPmyAdmin, en cliquant dessus vous pourrez voir toutes les tables presentes à l'interieur.
+
+sinon si vous souhaitez créer votre propre base:
+
+dans le terminal entrez cette commande: php bin/console make:migration 
+
+puis : php bin/console doctrine:migrations:migrate
+
+
+Dans le repertoire de l'application, fichier .env , vérifier que le nom de la base de donnée est le même que celle que vous avez créer dans PHPmyAdmin,
+normalement, 
+
+DATABASE_URL="mysql://root@127.0.0.1:3306/garageautomobile?serverVersion=10.11.2-MariaDB&charset=utf8mb4"
+
+
+ensuite sous visual code par exemple, dans le terminal tapez la commande suivante en etant dans le repertoire racine créer au debut:
+
+symfony serve -d
+
+dans le terminal un rectangle vert avec l'adresse du serveur https://127.0.0.1:8000 va apparaitre,
+copiez cette ligne dans le navigateur en ajoutant /accueil a la fin, vous arriverez sur la page d'accueil du site.
+
+
+Pour tester les fonctionnalités du site, il y a deja 2 utilisateurs créés si vous avez importé la base fournie:
+
+Administrateur: 
+identifiant: admin@gmail.com
+mot de passe: 123456
+
+Employé:
+identifiant: employe@gmail.com
+mot de passe: 123456
+
+Sinon si vous avez créé votre propre base, il faut créer l'administrateur:
+
+
 
 
 
