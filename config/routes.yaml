@@ -11,3 +11,8 @@ app_homepage:
 accueil_app:
     path: /accueil
     controller: App\Controller\SecurityController::index
+
+app_service_index:
+    path: /service
+    controller: App\Controller\ServiceController::index
+    
