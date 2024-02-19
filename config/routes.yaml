@@ -7,3 +7,7 @@ controllers:
 app_homepage:
     path: /
     controller: App\Controller\SecurityController::index
+
+app_homepage:
+    path: /accueil
+    controlleur: App\Controller\SecurityController::index
