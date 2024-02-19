@@ -8,6 +8,6 @@ app_homepage:
     path: /
     controller: App\Controller\SecurityController::index
 
-app_homepage:
+app_homepage2:
     path: /accueil
     controller: App\Controller\SecurityController::index
