@@ -19,7 +19,7 @@ sur votre machine locale, créez un dossier à l'endroit de votre choix et place
 
 --> git clone https://github.com/BrunoStudi/Garage_Automobile.git
 
-Apres avoir cloner le projet du github, lancer les commandes suivantes sur le terminal:
+Apres avoir cloner le projet du github, lancer les commandes suivantes sur le terminal en etant à la racine du dossier projet:
 
 -	composer install
 -	npm install
@@ -31,7 +31,7 @@ Connectez vous avec l'identifiant "root" et un mot de pass vide et choix du serv
 Créez une nouvelle base de donnée en vous rendant dans SQL au niveau de l'onglet superieur,
 entrez la commende suivante: 
 
-CREATE DATABASE garageautomobile;
+CREATE DATABASE garageautomobile; puis cliquez sur le bouton "executer"
 
 Fichier SQL de la base de donnée à importer: https://mega.nz/file/EGt32DRL#YXnXECUh1hOXZ7tCwhVQOQ6HWQMDuQB1Kah6T9a_eJk
 
@@ -47,7 +47,7 @@ ensuite la nouvelle base de donnée devrait apparaitre dans PHPmyAdmin, en cliqu
 
 sinon si vous souhaitez créer votre propre base:
 
-dans le terminal entrez cette commande: php bin/console make:migration 
+dans le terminal à la racine du dossier projet, entrez cette commande: php bin/console make:migration 
 
 puis : php bin/console doctrine:migrations:migrate
 
@@ -58,7 +58,7 @@ normalement,
 DATABASE_URL="mysql://root@127.0.0.1:3306/garageautomobile?serverVersion=10.11.2-MariaDB&charset=utf8mb4"
 
 
-ensuite sous visual code par exemple, dans le terminal tapez la commande suivante en etant dans le repertoire racine créer au debut:
+ensuite sous visual code par exemple, dans le terminal tapez la commande suivante en etant dans le repertoire racine du projet:
 
 symfony serve -d
 
@@ -77,6 +77,13 @@ identifiant: employe@gmail.com
 mot de passe: 123456
 
 Sinon si vous avez créé votre propre base, il faut créer l'administrateur:
+
+Aller dans le controlleur : RegistrationController.php et décommentez la derniere partie du code "Ajouter admin"
+
+ensuite dans le navigateur entrez l'adresse https://127.0.0.1/registeradmin
+
+
+Amusez vous bien :)
 
 
 
