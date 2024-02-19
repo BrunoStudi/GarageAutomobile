@@ -62,33 +62,33 @@ class RegistrationController extends AbstractController
 
        //////////////////////////////////////// Ajouter Admin //////////////////////////////////////////
 
-    // #[Route('/registeradmin', name: 'app_registeradmin')]
-    // public function registeradmin(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, AuthentificationUtilisateurAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
-    // {
-    //     $user = new Utilisateur();
-    //     $form = $this->createForm(RegistrationFormType::class, $user);
-    //     $form->handleRequest($request);
+     /* #[Route('/registeradmin', name: 'app_registeradmin')]
+     public function registeradmin(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, AuthentificationUtilisateurAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
+     {
+         $user = new Utilisateur();
+         $form = $this->createForm(RegistrationFormType::class, $user);
+         $form->handleRequest($request);
 
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $user->setRoles('ROLE_ADMIN');
-    //         $user->setPassword(
-    //             $userPasswordHasher->hashPassword(
-    //                 $user,
-    //                 $form->get('plainPassword')->getData()
-    //             )
-    //         );
+         if ($form->isSubmitted() && $form->isValid()) {
+             $user->setRoles('ROLE_ADMIN');
+             $user->setPassword(
+                 $userPasswordHasher->hashPassword(
+                     $user,
+                     $form->get('plainPassword')->getData()
+                 )
+             );
 
-    //         $entityManager->persist($user);
-    //         $entityManager->flush();
+             $entityManager->persist($user);
+             $entityManager->flush();
             
 
-    //         return $this->redirectToRoute('app_utilisateur');
-    //     }
+             return $this->redirectToRoute('app_utilisateur');
+         }
 
-    //     return $this->render('registration/register.html.twig', [
-    //         'registrationForm' => $form->createView(),
-    //     ]);
-    // }
+         return $this->render('registration/register.html.twig', [
+             'registrationForm' => $form->createView(),
+         ]);
+     } */
 
 
 
