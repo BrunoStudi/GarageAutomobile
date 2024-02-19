@@ -62,7 +62,7 @@ class RegistrationController extends AbstractController
 
        //////////////////////////////////////// Ajouter Admin //////////////////////////////////////////
 
-     /* #[Route('/registeradmin', name: 'app_registeradmin')]
+      #[Route('/registeradmin', name: 'app_registeradmin')]
      public function registeradmin(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, AuthentificationUtilisateurAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
      {
          $user = new Utilisateur();
@@ -88,7 +88,7 @@ class RegistrationController extends AbstractController
          return $this->render('registration/register.html.twig', [
              'registrationForm' => $form->createView(),
          ]);
-     } */
+     } 
 
 
 
