@@ -51,7 +51,7 @@ class HorairesOuvertureController extends AbstractController
 
     //////////////////////////////////////// Afficher Horaires d'Ouverture //////////////////////////////////////////
 
-    #[Route('/horaires-ouverture', name: 'horaires_ouverture')]
+    #[Route('/horairesouverture', name: 'horaires_ouverture')]
     public function index(HorairesOuvertureRepository $horairesOuvertureRepository): Response
     {
 
