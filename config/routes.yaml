@@ -10,4 +10,4 @@ app_homepage:
 
 app_homepage:
     path: /accueil
-    controlleur: App\Controller\SecurityController::index
+    controller: App\Controller\SecurityController::index
