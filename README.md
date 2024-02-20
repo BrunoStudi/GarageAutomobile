@@ -2,7 +2,9 @@ GARAGE AUTOMOBILE
 
 V. Parrot
 
-Pour tester l'application:
+Pour tester l'application: (d'abord en local, pour la version en ligne voir plus bas).
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
 
 sur votre machine installez, depuis les sites officiels: 
 - COMPOSER:
@@ -81,6 +83,19 @@ Sinon si vous avez créé votre propre base, il faut créer l'administrateur:
 Aller dans le controlleur : RegistrationController.php et décommentez la derniere partie du code "Ajouter admin"
 
 ensuite dans le navigateur entrez l'adresse https://127.0.0.1/registeradmin
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+Version en ligne:
+
+
+Application disponible à cette adresse:
+
+http://arcane-springs-06935-14402cc9d4dd.herokuapp.com/accueil
+
+Administrateur: admin@gmail.com / mdp: 123456
+
+Utilisateur: employe@gmail.com / mdp: 123456
 
 
 Amusez vous bien :)
