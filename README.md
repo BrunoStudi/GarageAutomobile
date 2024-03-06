@@ -7,12 +7,33 @@ Pour tester l'application: (d'abord en local, pour la version en ligne voir plus
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 
 sur votre machine installez, depuis les sites officiels: 
+- PHP 8.3:
+  https://windows.php.net/downloads/releases/php-8.3.3-nts-Win32-vs16-x64.zip
+
+Extraire à la Racine de C: dans un dossier PHP8.
+ensuite allez dans les parametre d'environement windows puis sur la ligne "path"
+cliquez sur modifier puis ajouter ceci: c:\php8 puis validez tout.
+
 - COMPOSER:
   https://getcomposer.org/Composer-Setup.exe
 - NODE.JS:
   https://nodejs.org/dist/v20.11.1/node-v20.11.1-x64.msi
 - WAMP SERVER:
   https://www.wampserver.com/en/download-wampserver-64bits/#wampserver-64-bits-php-5-6-25-php-7
+
+- Scoop:
+  installez ensuite scoop avec les 2 commandes suivantes dans un terminal :
+
+  Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+  puis
+
+  Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+
+  - Symfony CLI:
+    dans un terminal tapez la commande suivante,
+    
+    scoop install symfony-cli
   
 
 Cloner le repository:
