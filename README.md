@@ -30,10 +30,10 @@ cliquez sur modifier puis ajouter ceci: c:\php8 puis validez tout.
 
   Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
 
-  - Symfony CLI:
-    dans un terminal tapez la commande suivante,
+- Symfony CLI:
+  dans un terminal tapez la commande suivante,
     
-    scoop install symfony-cli
+  scoop install symfony-cli
   
 
 Cloner le repository:
